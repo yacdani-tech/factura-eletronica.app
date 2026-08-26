@@ -1,9 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { updateSession } from "@/lib/supabase/middleware";
-import { TENANT_SUBDOMAIN_HEADER, obtenerDominioRaiz, resolverSubdominio } from "@/lib/tenant/subdominio";
-import { isMaintenanceMode } from "@/lib/maintenance";
-import { PATHNAME_HEADER } from "@/lib/servidor/pathname-header";
+// NOTA (deploy Vercel): imports RELATIVOS a propósito, no el alias `@/`. El
+// bundler del Edge Runtime que compila el middleware en Vercel (monorepo con
+// Root Directory en `apps/web`) no resuelve los `paths` del tsconfig y falla con
+// "The Edge Function 'middleware' is referencing unsupported modules". Las
+// páginas sí resuelven `@/` (se compilan aparte), pero el middleware NO — por eso
+// acá van relativos. Sus dependencias no usan `@/`, así que el grafo Edge cierra.
+import { updateSession } from "./lib/supabase/middleware";
+import { TENANT_SUBDOMAIN_HEADER, obtenerDominioRaiz, resolverSubdominio } from "./lib/tenant/subdominio";
+import { isMaintenanceMode } from "./lib/maintenance";
+import { PATHNAME_HEADER } from "./lib/servidor/pathname-header";
 
 const RUTA_MANTENIMIENTO = "/mantenimiento";
 
