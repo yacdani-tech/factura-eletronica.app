@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens de diseño — Factura Electrónica (placeholder).
+ * Reemplazá la paleta por la de tu marca al instanciar una app nueva.
+ * UI light-first. Los valores shadcn (--primary, etc.) se expresan en HSL.
+ */
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* #FFFFFF Fondo */
+    --foreground: 222 47% 11%; /* #111827 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 141 65% 44%; /* color primario placeholder */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 98%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 20% 98%;
+    --muted-foreground: 218 11% 65%;
+
+    --accent: 210 20% 98%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 72% 51%; /* #DC2626 Error */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 13% 91%;
+    --ring: 141 65% 44%;
+
+    --radius: 0.5rem;
+
+    /* Colores funcionales adicionales */
+    --exito: 141 65% 44%;
+    --alerta: 38 92% 50%; /* #F59E0B */
+    --info: 217 91% 60%; /* #3B82F6 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}

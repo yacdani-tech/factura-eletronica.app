@@ -1,0 +1,24 @@
+{
+  "name": "factura-eletronica",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || >=22.13.0"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=factura-eletronica-web",
+    "dev:landing": "npm run dev --workspace=factura-eletronica-landing",
+    "build:web": "npm run build --workspace=factura-eletronica-web",
+    "build:landing": "npm run build --workspace=factura-eletronica-landing",
+    "lint:web": "npm run lint --workspace=factura-eletronica-web",
+    "lint:landing": "npm run lint --workspace=factura-eletronica-landing",
+    "test:hooks": "node --test .claude/hooks/lib/*.test.mjs",
+    "test:landing": "npm run test --workspace=factura-eletronica-landing",
+    "test:web": "npm run test --workspace=factura-eletronica-web",
+    "test:e2e:web": "npm run test:e2e --workspace=factura-eletronica-web",
+    "test:e2e:seed:web": "npm run test:e2e:seed --workspace=factura-eletronica-web"
+  }
+}

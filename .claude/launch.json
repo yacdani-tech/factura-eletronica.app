@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "factura-eletronica-landing",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--workspace=apps/landing"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "factura-eletronica-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--workspace=apps/web"],
+      "port": 3001
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+name: CI
+
+# Base de testing del monorepo. TRES jobs:
+#   - `test`: Vitest (unit) de los workspaces del monorepo (web, landing).
+#   - `e2e-gc`: limpieza previa de tenants efímeros huérfanos (best-effort).
+#   - `e2e`: Playwright, la suite de flujos de TENANT con correo/contraseña,
+#     contra el proyecto Supabase remoto de desarrollo, como MATRIZ de shards en
+#     runners PARALELOS. Cada worker levanta su PROPIO tenant efímero
+#     (apps/web/e2e/fixtures.ts), así el paralelismo no contamina. Requiere las
+#     credenciales de Supabase del entorno de dev + `SUPABASE_SERVICE_ROLE_KEY`
+#     (la fábrica de tenants efímeros la usa para crear/sembrar/borrar).
+
+# Disparo SOLO manual (`workflow_dispatch`): los disparos automáticos
+# (`push`/`pull_request`) quedan COMENTADOS para no consumir minutos del plan
+# de GitHub Actions. Para reactivar: descomentar los bloques `push` y
+# `pull_request`. Mientras tanto los gates de calidad = Vitest/tsc local +
+# revisor + el deploy de Vercel.
+on:
+  # push:
+  #   branches: [main, dev]
+  # pull_request:
+  #   branches: [main, dev]
+  workflow_dispatch:
+
+# Menor privilegio: este workflow solo lee el repo. Si algún día un job necesita
+# escribir (deploy, publish), subir el permiso EN ESE JOB puntual, no acá.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Vitest (${{ matrix.workspace }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace: [web, landing]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js (según .nvmrc / engines)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Instalar dependencias (workspaces npm)
+        run: npm ci
+
+      - name: Vitest — ${{ matrix.workspace }}
+        run: npm run test:${{ matrix.workspace }}
+
+  # GC de red de seguridad ANTES de la matriz: borra tenants efímeros
+  # (`e2e-ef-`) de corridas previas que hayan crasheado antes de su teardown.
+  # Job único (no per-shard) para no correr el GC en paralelo. La matriz `needs`
+  # este job, así arranca con la BD limpia de residuales.
+  e2e-gc:
+    name: E2E — GC de tenants efímeros huérfanos
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configurar Node.js (según .nvmrc / engines)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+      - name: Instalar dependencias (workspaces npm)
+        run: npm ci
+      - name: Limpiar tenants efímeros huérfanos (best-effort, nunca fatal)
+        working-directory: apps/web
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run test:e2e:gc
+
+  e2e:
+    name: Playwright E2E (shard ${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    needs: e2e-gc
+    # Aislamiento por-worker + shards PARALELOS. Cada shard es un JOB separado
+    # (runner propio) que corre en paralelo con los demás. Dentro de cada shard,
+    # `--workers` corre varios specs a la vez; con el tenant efímero por-worker
+    # (e2e/fixtures.ts) eso ya no contamina. Namespacing de tenants por
+    # `E2E_RUN_ID` (github.run_id + shard) para no colisionar entre jobs.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    # SUPABASE_SERVICE_ROLE_KEY NO va a nivel de job (menor privilegio) — se
+    # inyecta solo en los pasos que la usan (seed y el propio `next dev` de
+    # Playwright, que la necesita para resolver el tenant en rutas públicas sin
+    # sesión).
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      E2E_TEST_TENANT_EMAIL: ${{ secrets.E2E_TEST_TENANT_EMAIL }}
+      E2E_TEST_TENANT_PASSWORD: ${{ secrets.E2E_TEST_TENANT_PASSWORD }}
+      # Identificador único de esta corrida+shard: la fábrica de tenants
+      # efímeros lo usa para nombrar subdominios/usuarios sin colisión entre los
+      # jobs de la matriz que corren en paralelo (ver e2e/fixtures.ts).
+      E2E_RUN_ID: ${{ github.run_id }}-s${{ matrix.shard }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js (según .nvmrc / engines)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Instalar dependencias (workspaces npm)
+        run: npm ci
+
+      - name: Instalar navegadores de Playwright (Chromium + deps del sistema)
+        run: npx playwright install --with-deps chromium
+        working-directory: apps/web
+
+      # Idempotente: correrlo en cada corrida de CI es seguro. Se SALTA (no falla
+      # el job) si todavía faltan los secrets — los specs de abajo se auto-saltan
+      # también en ese caso. El contexto `secrets` NO está permitido en el `if`
+      # de un paso (invalidaría el workflow entero); por eso la presencia del
+      # service-role se chequea DENTRO del script, vía env del paso.
+      - name: Sembrar tenant/usuario de prueba (idempotente)
+        if: ${{ env.E2E_TEST_TENANT_EMAIL != '' && env.E2E_TEST_TENANT_PASSWORD != '' }}
+        working-directory: apps/web
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+            echo "SUPABASE_SERVICE_ROLE_KEY no configurada — se salta el seed (los specs se auto-saltan igual)."
+            exit 0
+          fi
+          npm run test:e2e:seed
+
+      # Este job ES un shard (matrix.shard de N). Corre SU fracción de la suite
+      # con `--shard`. `--workers=1` por shard A PROPÓSITO: la velocidad sale del
+      # PARALELISMO ENTRE SHARDS (runners separados, cada uno con SU dev server).
+      - name: Playwright — shard ${{ matrix.shard }}/4 (paralelo entre shards, tenant efímero por worker)
+        working-directory: apps/web
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/4 --workers=1
+
+      - name: Subir reporte de Playwright del shard ${{ matrix.shard }} (siempre, para diagnosticar fallos)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          # Nombre único por shard: upload-artifact@v4 rechaza nombres duplicados
+          # entre jobs concurrentes de la matriz.
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: apps/web/playwright-report/
+          retention-days: 7

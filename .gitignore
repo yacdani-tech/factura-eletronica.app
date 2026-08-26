@@ -1,0 +1,61 @@
+# === Secretos / config local (NUNCA commitear) ===
+.mcp.json
+.env
+.env.*
+!.env.example
+
+# === Datos de prueba (posible PII) — fixtures locales ===
+testingfiles/
+
+# === Copia Word local del spec (posible PII) — se REGENERA con pandoc ===
+Requerimientos/
+
+# === Skills vendorizados / externos que no se trackean (si aplica) ===
+# (En el framework los skills externos se vendorizan como archivos reales.
+#  Si algún skill vuelve a ser symlink externo, ignorarlo aquí.)
+
+# === Dependencias ===
+node_modules/
+
+# === Next.js / build ===
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+
+# === Supabase local ===
+supabase/.branches/
+supabase/.temp/
+
+# === Logs y temporales ===
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# === Editor / IDE ===
+.vscode/
+.idea/
+
+# === Vercel ===
+.vercel
+
+# === Artefactos de verificación local (Playwright, capturas) ===
+.playwright-mcp/
+
+# === Playwright Test (apps/web/e2e) — artefactos de corrida, no de código ===
+apps/web/playwright-report/
+apps/web/test-results/
+apps/web/blob-report/
+apps/web/playwright/.cache/
+
+# === Reportes de hooks de QA/revisión (runtime) ===
+.claude/qa-reports/
+.claude/code-review-reports/
+
+# === Config local de Claude Code (por máquina) ===
+.claude/settings.local.json
+
+# === Credenciales del carril de QA (Trello) — NUNCA se commitean ===
+.env.qa

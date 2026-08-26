@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens de diseño — Factura Electrónica (placeholder).
+ * Reemplazá la paleta por la de tu marca al instanciar una app nueva.
+ * Marketing puede usar dark mode en portadas; el producto (apps/web) es light-first.
+ */
+@layer base {
+  :root {
+    --verde: 141 65% 44%;
+    --verde-oscuro: 142 62% 35%;
+    --verde-texto: 144 67% 29%;
+    --negro: 222 47% 11%; /* #111827 */
+    --gris-oscuro: 218 17% 26%; /* #374151 */
+    --gris-medio: 218 11% 65%; /* #9CA3AF */
+    --gris-claro: 220 13% 91%; /* #E5E7EB */
+    --fondo: 0 0% 100%; /* #FFFFFF */
+
+    /* Tintes de acento reutilizados en el landing (pills, tiles de icono) */
+    --verde-tinte: 149 47% 94%;
+    --verde-tinte-2: 137 43% 97%;
+  }
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-fondo text-negro;
+    font-variant-numeric: tabular-nums;
+  }
+  ::selection {
+    background: hsl(var(--verde));
+    color: #fff;
+  }
+}

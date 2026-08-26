@@ -1,0 +1,32 @@
+-- =============================================================================
+-- Migración: revoke EXECUTE de registrar_auditoria() para anon/authenticated
+-- -----------------------------------------------------------------------------
+-- IMPACTO: solo permisos (ACL) de una función; cero cambios de esquema o
+-- comportamiento de la app.
+--
+-- CONTEXTO: el advisor de seguridad de Supabase (2026-07-13, tras aplicar
+-- 20260713091000) reportó WARN `anon_security_definer_function_executable` /
+-- `authenticated_security_definer_function_executable` sobre
+-- public.registrar_auditoria(): los default privileges de Supabase le dieron
+-- EXECUTE directo a anon/authenticated (mismo mecanismo del aprendizaje
+-- 20260713090800), y por ser SECURITY DEFINER queda listada en
+-- /rest/v1/rpc/. NO es explotable en la práctica — Postgres rechaza invocar
+-- una función que retorna `trigger` fuera del mecanismo de triggers ("trigger
+-- functions can only be called as triggers") — pero el revoke es gratis,
+-- silencia el WARN y es defensa en profundidad si algún día la función
+-- cambiara de firma.
+--
+-- Revocar EXECUTE NO afecta el disparo de los triggers ya creados: el
+-- privilegio de EXECUTE sobre la función de un trigger se verifica al hacer
+-- CREATE TRIGGER (contra quien lo crea), no en cada disparo. Los attach
+-- futuros (ej. tarifas) los hace el rol postgres (dueño), que conserva sus
+-- privilegios.
+-- ES DESTRUCTIVA: no.
+-- CÓMO VALIDAR: has_function_privilege('anon', 'public.registrar_auditoria()',
+-- 'execute') debe dar false (ídem authenticated); un UPDATE de negocio como
+-- usuario autenticado debe seguir generando su fila de auditoría.
+-- PLAN DE REVERSIÓN: grant execute on function public.registrar_auditoria()
+-- to anon, authenticated;
+-- =============================================================================
+
+revoke execute on function public.registrar_auditoria() from public, anon, authenticated;
