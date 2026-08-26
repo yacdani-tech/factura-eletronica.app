@@ -61,5 +61,9 @@
     "typescript": "^5.7.2",
     "vitest": "^3.2.7",
     "write-excel-file": "^4.1.1"
+  },
+  "overrides": {
+    "@supabase/supabase-js": "2.110.2",
+    "@supabase/realtime-js": "2.110.2"
   }
 }
