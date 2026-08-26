@@ -20,5 +20,9 @@
     "test:web": "npm run test --workspace=factura-eletronica-web",
     "test:e2e:web": "npm run test:e2e --workspace=factura-eletronica-web",
     "test:e2e:seed:web": "npm run test:e2e:seed --workspace=factura-eletronica-web"
+  },
+  "overrides": {
+    "@supabase/supabase-js": "2.110.2",
+    "@supabase/realtime-js": "2.110.2"
   }
 }
