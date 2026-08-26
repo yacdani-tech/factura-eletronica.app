@@ -151,6 +151,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  // Runtime Node.js (no Edge): el grafo de `@supabase/ssr` referencia `__dirname`,
+  // que no existe en el Edge Runtime (crashea en Vercel). Ver next.config.ts.
+  runtime: "nodejs",
   matcher: [
     /*
      * Todas las rutas excepto:
