@@ -8,8 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from "@factura/ui/table";
+import { Badge } from "@factura/ui/badge";
 import { exigirSuperAdmin } from "@factura/db/auth/exigir-super-admin";
 import { listarTenants } from "@/lib/soporte/plataforma/datos";
 import { AccionesTenant } from "@/components/soporte/acciones-tenant";

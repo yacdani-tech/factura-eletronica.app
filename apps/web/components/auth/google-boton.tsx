@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@factura/ui/button";
 import { GoogleIcon } from "@/components/auth/google-icon";
 import { iniciarSesionConGoogle } from "@/lib/auth/acciones";
 

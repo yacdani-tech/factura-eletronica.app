@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 
-import { TableHead } from "@/components/ui/table";
+import { TableHead } from "./table";
 import { construirHrefOrden, type OpcionesHrefOrden } from "@factura/core/href-orden";
-import { textosListas } from "@/lib/textos/listas";
+import { textosListas } from "./textos";
 import { cn } from "@factura/core/utils";
 import type { Direccion, OrdenListado } from "@factura/core/listas";
 

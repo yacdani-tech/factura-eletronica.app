@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@factura/ui/button";
 import { bloquearTenant, desbloquearTenant, entrarASoporte } from "@/lib/soporte/acciones";
 import { textosSoporte } from "@/lib/textos/soporte";
 

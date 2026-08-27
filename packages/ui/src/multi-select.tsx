@@ -3,13 +3,13 @@
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "./button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "./dropdown-menu";
 import { cn } from "@factura/core/utils";
 
 export interface OpcionMultiSelect {

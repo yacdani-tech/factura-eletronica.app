@@ -1,7 +1,7 @@
 import { LogOut } from "lucide-react";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@factura/ui/avatar";
+import { Button } from "@factura/ui/button";
 import { SidebarSoporte } from "@/components/soporte/sidebar-soporte";
 import { cerrarSesion } from "@/lib/auth/acciones";
 import { textosSoporte } from "@/lib/textos/soporte";

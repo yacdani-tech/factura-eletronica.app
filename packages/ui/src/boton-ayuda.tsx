@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Info } from "lucide-react";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { cn } from "@factura/core/utils";
 
 interface BotonAyudaProps {

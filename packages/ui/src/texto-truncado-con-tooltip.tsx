@@ -1,7 +1,7 @@
 "use client";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { textosListas } from "@/lib/textos/listas";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+import { textosListas } from "./textos";
 import { cn } from "@factura/core/utils";
 
 const LIMITE_DEFECTO = 20;

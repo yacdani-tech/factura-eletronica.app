@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Settings, User, LogOut, ShieldAlert } from "lucide-react";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@factura/ui/avatar";
+import { Button } from "@factura/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@factura/ui/dropdown-menu";
 import { TituloPagina } from "@/components/layout/titulo-pagina";
 import { userMenuItems } from "@/lib/nav";
 import { textosAuth } from "@/lib/textos/auth";

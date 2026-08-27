@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@factura/core/utils";
-import { textosListas } from "@/lib/textos/listas";
+import { textosListas } from "../textos";
 
 export interface TarjetaListaMobileProps {
   /** Checkbox/indicador a la izquierda, alineado `mt-0.5` (mismo criterio que el `Checkbox` de `grupo-facturacion.tsx`). */

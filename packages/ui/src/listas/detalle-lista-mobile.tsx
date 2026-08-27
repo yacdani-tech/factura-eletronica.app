@@ -4,7 +4,7 @@ import * as React from "react";
 import { ArrowLeft } from "lucide-react";
 
 import { cn } from "@factura/core/utils";
-import { textosListas } from "@/lib/textos/listas";
+import { textosListas } from "../textos";
 
 export interface DetalleListaMobileProps {
   /** Controlado por el padre (wrapper de fila) — mismo criterio que `expandido` en `GrupoFacturacion`. */

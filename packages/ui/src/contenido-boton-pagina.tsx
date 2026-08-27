@@ -3,7 +3,7 @@
 import { useLinkStatus } from "next/link";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
-import { textosPaginacion } from "@/lib/textos/paginacion";
+import { textosPaginacion } from "./textos";
 
 /**
  * Contenido (ícono + texto) del botón de paginación HABILITADO — Client

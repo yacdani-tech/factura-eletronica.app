@@ -4,8 +4,8 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "./label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { TAMANO_PAGINA_DEFECTO } from "@factura/core/paginacion";
 
 interface SelectorTamanoPaginaProps {

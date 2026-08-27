@@ -1,4 +1,4 @@
-import { textosPaginacion } from "@/lib/textos/paginacion";
+import { textosPaginacion } from "./textos";
 
 export interface TotalResultadosProps {
   /** Total EXACTO del set filtrado (`count: "exact"` ya calculado por la capa de datos — nunca recalculado acá, ver `lib/paginacion.ts`). */

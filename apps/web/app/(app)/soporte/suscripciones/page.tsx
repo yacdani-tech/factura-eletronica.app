@@ -8,8 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from "@factura/ui/table";
+import { Badge } from "@factura/ui/badge";
 import { exigirSuperAdmin } from "@factura/db/auth/exigir-super-admin";
 import { listarSuscripcionesTenants } from "@/lib/soporte/suscripciones/datos";
 import { AccionesSuscripcion } from "@/components/soporte/acciones-suscripcion";

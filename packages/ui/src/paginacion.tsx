@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { ContenidoBotonPagina } from "@/components/ui/contenido-boton-pagina";
+import { Button } from "./button";
+import { ContenidoBotonPagina } from "./contenido-boton-pagina";
 import { construirHrefPagina } from "@factura/core/paginacion";
-import { textosPaginacion } from "@/lib/textos/paginacion";
+import { textosPaginacion } from "./textos";
 
 export interface PaginacionProps {
   /** Página actual (ya clampeada a `[1, totalPaginas]` por el caller — ver `lib/paginacion.ts`). */

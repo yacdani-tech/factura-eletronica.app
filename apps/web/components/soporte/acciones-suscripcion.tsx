@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@factura/ui/button";
 import { marcarSuscripcionPagada, revertirPagoSuscripcion } from "@/lib/soporte/suscripciones/acciones";
 import type { EstadoSuscripcionFactura } from "@factura/core/suscripcion/tipos";
 

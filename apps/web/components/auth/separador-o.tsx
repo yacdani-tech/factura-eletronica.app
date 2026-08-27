@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@factura/ui/separator";
 
 /** Separador "o con tu correo" entre el botón de Google y el formulario. */
 export function SeparadorO({ texto }: { texto: string }) {

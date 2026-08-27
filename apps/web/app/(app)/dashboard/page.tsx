@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@factura/ui/card";
 
 export const metadata: Metadata = {
   title: "Inicio — factura-eletronica.app",

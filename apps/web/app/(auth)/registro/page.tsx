@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@factura/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@factura/ui/card";
 import { textosAuth } from "@/lib/textos/auth";
 
 export const metadata: Metadata = {

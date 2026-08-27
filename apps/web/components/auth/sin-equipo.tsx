@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@factura/ui/card";
+import { Button } from "@factura/ui/button";
 import { cerrarSesion } from "@/lib/auth/acciones";
 import { textosAuth } from "@/lib/textos/auth";
 

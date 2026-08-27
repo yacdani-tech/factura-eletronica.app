@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@factura/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@factura/ui/card";
 import { textosComun } from "@/lib/textos/comun";
 
 /**
