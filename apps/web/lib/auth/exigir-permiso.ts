@@ -4,7 +4,7 @@ import {
   type MembresiaActual,
   type UsuarioActual,
 } from "@/lib/auth/usuario-actual";
-import { puede, type Permiso } from "@/lib/permisos";
+import { puede, type Permiso } from "@factura/core/permisos";
 import { textosPermisos } from "@/lib/textos/permisos";
 
 /**

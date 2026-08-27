@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 
 import { createAdminClient } from "@/lib/supabase/admin";
-import { TENANT_SUBDOMAIN_HEADER } from "@/lib/tenant/subdominio";
+import { TENANT_SUBDOMAIN_HEADER } from "@factura/core/tenant/subdominio";
 
 /**
  * Lookup MÍNIMO de "existencia de tenant" por subdominio, para el gate

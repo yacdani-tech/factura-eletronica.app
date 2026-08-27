@@ -4,7 +4,7 @@ import * as React from "react";
 import { X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 export interface InputBusquedaProps extends React.InputHTMLAttributes<HTMLInputElement> {
   /**

@@ -7,8 +7,8 @@ import { NextResponse, type NextRequest } from "next/server";
 // páginas sí resuelven `@/` (se compilan aparte), pero el middleware NO — por eso
 // acá van relativos. Sus dependencias no usan `@/`, así que el grafo Edge cierra.
 import { updateSession } from "./lib/supabase/middleware";
-import { TENANT_SUBDOMAIN_HEADER, obtenerDominioRaiz, resolverSubdominio } from "./lib/tenant/subdominio";
-import { isMaintenanceMode } from "./lib/maintenance";
+import { TENANT_SUBDOMAIN_HEADER, obtenerDominioRaiz, resolverSubdominio } from "@factura/core/tenant/subdominio";
+import { isMaintenanceMode } from "@factura/core/maintenance";
 import { PATHNAME_HEADER } from "./lib/servidor/pathname-header";
 
 const RUTA_MANTENIMIENTO = "/mantenimiento";

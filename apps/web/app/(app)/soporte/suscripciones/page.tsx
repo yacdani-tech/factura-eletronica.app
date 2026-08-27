@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { exigirSuperAdmin } from "@/lib/auth/exigir-super-admin";
 import { listarSuscripcionesTenants } from "@/lib/soporte/suscripciones/datos";
 import { AccionesSuscripcion } from "@/components/soporte/acciones-suscripcion";
-import type { EstadoSuscripcionFactura } from "@/lib/suscripcion/tipos";
+import type { EstadoSuscripcionFactura } from "@factura/core/suscripcion/tipos";
 
 export const metadata: Metadata = {
   title: "Suscripciones — factura-eletronica.app",

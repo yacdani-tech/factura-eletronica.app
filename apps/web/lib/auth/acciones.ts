@@ -5,9 +5,9 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { textosAuth } from "@/lib/textos/auth";
 import { mensajeErrorLogin } from "@/lib/auth/errores";
-import { loginSchema } from "@/lib/validaciones/auth";
-import { rutaInternaSegura, rutaInternaSeguraODefecto } from "@/lib/validaciones/redireccion";
-import type { EstadoAccionAuth } from "@/lib/auth/tipos";
+import { loginSchema } from "@factura/core/validaciones/auth";
+import { rutaInternaSegura, rutaInternaSeguraODefecto } from "@factura/core/validaciones/redireccion";
+import type { EstadoAccionAuth } from "@factura/core/auth/tipos";
 import { origenSitio } from "@/lib/servidor/origen-sitio";
 import { procesarPostLogin } from "@/lib/soporte/despues-de-login";
 

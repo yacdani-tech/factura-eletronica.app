@@ -4,7 +4,7 @@ import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 /**
  * Blindaje contra el "reset" nativo que React 19 dispara sobre el `<form>`

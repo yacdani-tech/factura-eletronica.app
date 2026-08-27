@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 
-import { obtenerDominioRaiz } from "@/lib/tenant/subdominio";
+import { obtenerDominioRaiz } from "@factura/core/tenant/subdominio";
 
 /**
  * Construye la URL pública ABSOLUTA de un subdominio de tenant dado (ej. para

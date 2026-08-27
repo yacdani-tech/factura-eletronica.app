@@ -1,4 +1,4 @@
-import type { RolUsuario } from "@/lib/auth/usuario-actual";
+import type { RolUsuario } from "./auth/tipos";
 
 /**
  * Mapa central de permisos por rol (esqueleto de plataforma).

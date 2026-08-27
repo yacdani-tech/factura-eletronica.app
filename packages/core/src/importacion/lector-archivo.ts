@@ -1,5 +1,5 @@
-import { parsearCsv } from "@/lib/importacion/csv-parser";
-import { textosImportacion } from "@/lib/textos/importacion";
+import { parsearCsv } from "./csv-parser";
+import { textosImportacion } from "../textos/importacion";
 import {
   elegirHoja,
   esOle2,
@@ -8,10 +8,10 @@ import {
   ole2ContienePaqueteEncriptado,
   tamanoDescomprimidoZip,
   zipContieneWorkbookXlsx,
-} from "@/lib/importacion/xlsx-sheetjs";
-import { recuperarCsvEnUnaColumna } from "@/lib/importacion/csv-embebido-en-columna";
-import { corregirMojibakeFilas } from "@/lib/importacion/mojibake";
-import { SEPARADORES_CANDIDATOS, contarOcurrenciasFueraDeComillas, type SeparadorCsv } from "@/lib/importacion/separador-csv";
+} from "./xlsx-sheetjs";
+import { recuperarCsvEnUnaColumna } from "./csv-embebido-en-columna";
+import { corregirMojibakeFilas } from "./mojibake";
+import { SEPARADORES_CANDIDATOS, contarOcurrenciasFueraDeComillas, type SeparadorCsv } from "./separador-csv";
 
 /**
  * Lector ÚNICO de archivos de importación (CSV/`.xlsx`/`.xls`) — punto de

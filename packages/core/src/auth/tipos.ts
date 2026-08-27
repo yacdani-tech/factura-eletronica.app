@@ -10,4 +10,12 @@ export interface EstadoAccionAuth {
   ok?: boolean;
 }
 
+/**
+ * Rol de un usuario dentro de un tenant. Fuente única de verdad del tipo,
+ * promovida a `@factura/core` para que la capa de permisos pura
+ * (`permisos.ts`) la use sin depender de código de app; `apps/web` la
+ * re-exporta desde `lib/auth/usuario-actual.ts`.
+ */
+export type RolUsuario = "admin" | "operador";
+
 export const ESTADO_INICIAL_AUTH: EstadoAccionAuth = {};

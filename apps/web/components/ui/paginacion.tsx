@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ContenidoBotonPagina } from "@/components/ui/contenido-boton-pagina";
-import { construirHrefPagina } from "@/lib/paginacion";
+import { construirHrefPagina } from "@factura/core/paginacion";
 import { textosPaginacion } from "@/lib/textos/paginacion";
 
 export interface PaginacionProps {

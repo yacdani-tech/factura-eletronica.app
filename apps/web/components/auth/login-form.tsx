@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { GoogleBoton } from "@/components/auth/google-boton";
 import { SeparadorO } from "@/components/auth/separador-o";
 import { iniciarSesionConPassword } from "@/lib/auth/acciones";
-import { ESTADO_INICIAL_AUTH, type EstadoAccionAuth } from "@/lib/auth/tipos";
+import { ESTADO_INICIAL_AUTH, type EstadoAccionAuth } from "@factura/core/auth/tipos";
 import { textosAuth } from "@/lib/textos/auth";
 
 interface LoginFormProps {

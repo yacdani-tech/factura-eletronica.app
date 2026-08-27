@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { createClient } from "@/lib/supabase/server";
 import { textosAuth } from "@/lib/textos/auth";
-import { rutaInternaSegura } from "@/lib/validaciones/redireccion";
+import { rutaInternaSegura } from "@factura/core/validaciones/redireccion";
 import { procesarPostLogin } from "@/lib/soporte/despues-de-login";
 
 export const dynamic = "force-dynamic";

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 import { textosSoporte } from "@/lib/textos/soporte";
 
 /**

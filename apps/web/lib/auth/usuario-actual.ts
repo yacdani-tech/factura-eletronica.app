@@ -1,9 +1,11 @@
 import { cache } from "react";
 
+import type { RolUsuario } from "@factura/core/auth/tipos";
+
 import { createClient } from "@/lib/supabase/server";
 
-/** Roles de tenant del esqueleto: `admin` (acceso completo) y `operador` (secundario). Espejo del enum `public.rol_usuario`. */
-export type RolUsuario = "admin" | "operador";
+/** Roles de tenant del esqueleto: `admin` (acceso completo) y `operador` (secundario). Espejo del enum `public.rol_usuario`. Fuente única en `@factura/core`; se re-exporta acá para los consumidores existentes. */
+export type { RolUsuario };
 
 /** Mismos valores que el enum `public.estado_membresia` (20260713090200). */
 export type EstadoMembresia = "activo" | "inactivo";

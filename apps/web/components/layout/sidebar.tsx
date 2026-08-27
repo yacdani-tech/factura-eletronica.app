@@ -13,9 +13,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 import { navItems, navNavegandoTexto, navSinPermisoTexto, type NavIconName } from "@/lib/nav";
-import { puede } from "@/lib/permisos";
+import { puede } from "@factura/core/permisos";
 import { usePreferenciaSidebarContraida } from "@/components/layout/usar-preferencia-sidebar";
 import type { RolUsuario } from "@/lib/auth/usuario-actual";
 

@@ -4,7 +4,7 @@ import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { Check, Minus } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 /**
  * Checkbox (shadcn + Radix), primer uso: selección múltiple de paquetes

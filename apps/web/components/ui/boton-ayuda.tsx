@@ -4,7 +4,7 @@ import * as React from "react";
 import { Info } from "lucide-react";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 interface BotonAyudaProps {
   /** Texto/contenido de ayuda que se revela al hacer click/tap sobre el ícono. */

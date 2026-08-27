@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 /**
  * Piezas de skeleton COMPARTIDAS por los `loading.tsx` de las pantallas de

@@ -1,6 +1,6 @@
-import { parsearCsv } from "@/lib/importacion/csv-parser";
-import { SEPARADORES_CANDIDATOS, type SeparadorCsv } from "@/lib/importacion/separador-csv";
-import { textosImportacion } from "@/lib/textos/importacion";
+import { parsearCsv } from "./csv-parser";
+import { SEPARADORES_CANDIDATOS, type SeparadorCsv } from "./separador-csv";
+import { textosImportacion } from "../textos/importacion";
 
 /**
  * Recuperación de "CSV volcado dentro de una sola columna de un `.xlsx`/

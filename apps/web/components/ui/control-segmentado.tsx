@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 /** Una opción del control segmentado. `T` es el tipo del valor (union de strings del caller, ej. `"tabla" | "tarjetas"`). */
 export interface OpcionControlSegmentado<T extends string = string> {

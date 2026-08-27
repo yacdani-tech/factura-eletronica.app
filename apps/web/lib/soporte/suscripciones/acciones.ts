@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/lib/supabase/server";
 import { exigirSuperAdmin } from "@/lib/auth/exigir-super-admin";
-import { idSchema, primerErrorZod } from "@/lib/validaciones/auth";
+import { idSchema, primerErrorZod } from "@factura/core/validaciones/auth";
 
 /**
  * Server Actions de mutación del workflow de pago de suscripción. Toda mutación

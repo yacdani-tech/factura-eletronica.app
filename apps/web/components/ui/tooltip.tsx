@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 /**
  * Tooltip accesible (ítem 4 del lote de Yac 2026-07-18 — nota truncada en

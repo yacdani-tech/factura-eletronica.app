@@ -1,5 +1,5 @@
 import type { EstadoTenant } from "@/lib/soporte/plataforma/datos";
-import type { EstadoSuscripcionFactura } from "@/lib/suscripcion/tipos";
+import type { EstadoSuscripcionFactura } from "@factura/core/suscripcion/tipos";
 
 /**
  * Tipos PUROS de la consola de suscripciones del super-admin

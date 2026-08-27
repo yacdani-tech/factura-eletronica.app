@@ -1,4 +1,4 @@
-import type { Permiso } from "@/lib/permisos";
+import type { Permiso } from "@factura/core/permisos";
 
 /**
  * Ítems de navegación del app shell (esqueleto). Centralizados acá (listos

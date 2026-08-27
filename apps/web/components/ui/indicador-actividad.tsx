@@ -3,8 +3,8 @@
 import * as React from "react";
 import { Loader2 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { formatearTiempoTranscurrido } from "@/lib/ui/tiempo-transcurrido";
+import { cn } from "@factura/core/utils";
+import { formatearTiempoTranscurrido } from "@factura/core/ui/tiempo-transcurrido";
 
 /**
  * Indicador de ACTIVIDAD para procesos largos sin avance real reportado por el

@@ -2,7 +2,7 @@
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { textosListas } from "@/lib/textos/listas";
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 const LIMITE_DEFECTO = 20;
 

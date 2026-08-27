@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@factura/core/utils";
 
 /**
  * Popover accesible (tarea "cálculo de facturación auditable", F4 — Nivel 1

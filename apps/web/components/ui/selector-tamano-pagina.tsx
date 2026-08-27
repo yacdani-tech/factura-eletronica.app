@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TAMANO_PAGINA_DEFECTO } from "@/lib/paginacion";
+import { TAMANO_PAGINA_DEFECTO } from "@factura/core/paginacion";
 
 interface SelectorTamanoPaginaProps {
   /** Tamaño EFECTIVO ya resuelto por el servidor (la página valida `?tam=` contra `opciones`, default `TAMANO_PAGINA_DEFECTO`). */
