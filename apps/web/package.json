@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
     "test:e2e": "playwright test",
     "test:e2e:seed": "node e2e/seed-tenant-e2e.mjs",
     "test:e2e:gc": "node e2e/gc-tenants-efimeros.mjs"

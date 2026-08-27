@@ -23,11 +23,16 @@
     "tailwind-merge": "^2.5.4"
   },
   "peerDependencies": {
+    "next": "*",
     "react": "*",
     "react-dom": "*"
   },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
   "devDependencies": {
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "typescript": "^5.7.2"
   }
 }

@@ -56,10 +56,36 @@ actual no cubre, ampliar el `matcher` en vez de inventar un segundo mecanismo.
 
 ## b. Política de uso del cliente `service_role`
 
-**Archivo:** `apps/web/lib/supabase/admin.ts` — el cliente `service_role`
+**Archivo:** `packages/db/src/supabase/admin.ts` (`createAdminClient()`,
+exportado como `@factura/db/supabase/admin`) — el cliente `service_role`
 bypassa RLS/Storage por completo; es la excepción, no la norma.
 
-**Regla del proyecto (aplica a cualquier uso, existente o futuro):**
+**Dónde puede importarse (regla dura #1, post Fase 6/commit `705d0ea`):**
+`createAdminClient` vive en un paquete COMPARTIDO (`packages/db`), pero solo
+**`apps/api`** tiene permitido importarlo y llamarlo en runtime — es "la
+única superficie autorizada a usar `service_role`" (ver el propio comentario
+de cada call site en `apps/api`). **`apps/web` no debe importar
+`@factura/db/supabase/admin` en ningún código que corra en producción.**
+Verificado por grep (2026-08-26): cero usos reales en `apps/web` fuera de
+comentarios que documentan esta regla y de la infraestructura de tests E2E
+(`apps/web/e2e/**`, que corre fuera del runtime de la app y ya declara
+explícitamente que esa prohibición rige el runtime, no sus propios fixtures).
+Si algún día `apps/web` necesitara volver a importar el cliente admin, eso es
+en sí mismo una decisión de alto impacto para `arquitecto-app` — no un PR
+normal.
+
+**Inventario AUTORITATIVO de call sites reales (mantenido en el header de
+`packages/db/src/supabase/admin.ts`; reflejarlo acá cuando cambie):**
+
+| # | Call site | Por qué es imposible con RLS |
+|---|---|---|
+| 1 | `apps/api/app/api/cron/generar-suscripciones/route.ts` | Cron server-to-server (`Authorization: Bearer ${CRON_SECRET}`, sin cookie de sesión) que genera facturas de suscripción para TODOS los tenants — ningún cliente de sesión puede satisfacer la política RLS sin sesión ni acotarse a "todos los tenants" a la vez. Llama a la RPC de sistema `public.asegurar_facturas_suscripcion_sistema()`, otorgada exclusivamente a `service_role`. |
+
+Ningún otro call site existe hoy en el código real. El código heredado del
+template base ("casilleros") todavía trae ejemplos de otras clases de uso
+(Storage de un logo, alta pública sin sesión, outbox de email) que **no
+tienen feature ni call site propios en esta app todavía** — quedan como
+categorías de referencia en el punto 2 de abajo, no como inventario vigente.
 
 1. **`service_role` NUNCA se usa como vía GENERAL de acceso para leer o
    escribir datos de negocio protegidos por RLS.** Si una operación necesita
@@ -100,10 +126,14 @@ bypassa RLS/Storage por completo; es la excepción, no la norma.
      cliente admin — nunca después, nunca opcional.
    - Cualquier identificador que participe en la ruta/filtro de la operación
      (ej. el `tenantId` en el path de un archivo) tiene que salir del CONTEXTO
-     de sesión ya autenticado, **jamás de un parámetro que mande el cliente** —
-     la regla dura #1 aplica igual acá, aunque `service_role` no la fuerce. En
-     un flujo público, el `tenantId` sale de resolver el subdominio server-side
-     (§a / §h), nunca del FormData.
+     ya autenticado/resuelto server-side (sesión + membresía vía §h, o el
+     propio Cron/RPC de sistema para un job sin sesión), **jamás de un
+     parámetro que mande el cliente** — la regla dura #1 aplica igual acá,
+     aunque `service_role` no la fuerce. Este producto NO tiene subdominio por
+     tenant (§h): un futuro endpoint público sin sesión que necesite resolver
+     "a qué tenant pertenece esto" tiene que definir su PROPIO mecanismo
+     explícito (ej. un token/capability URL), nunca inventarlo asumiendo un
+     host por tenant que no existe acá.
 4. **`import "server-only"`** en el módulo del cliente admin es obligatorio:
    hace fallar el build si se importa desde un Client Component, en vez de
    depender de disciplina humana.
@@ -112,14 +142,15 @@ bypassa RLS/Storage por completo; es la excepción, no la norma.
      limitación estructural hace imposible RLS acá).
    - Revisión **obligatoria** del agente `revisor` antes de mergear, con foco
      en los puntos 1-4.
-   - Mantener en `lib/supabase/admin.ts` (y, si el proyecto lo lleva, en esta
-     sección) la lista de usos permitidos, para que nunca quede desactualizada
-     respecto al código real.
+   - Mantener en `packages/db/src/supabase/admin.ts` (y, siempre, en la tabla
+     de este documento) la lista de usos permitidos, para que nunca quede
+     desactualizada respecto al código real.
 
 ## c. Excepciones documentadas a la regla dura #1 (tenant_id como parámetro)
 
-La regla dura #1 es "el subdominio define el tenant; JAMÁS aceptar `tenant_id`
-desde el cliente". Puede existir un conjunto ACOTADO de puntos donde un
+La regla dura #1 es "el tenant se resuelve por sesión/membresía (§h);
+JAMÁS aceptar `tenant_id` desde el cliente". Puede existir un conjunto ACOTADO
+de puntos donde un
 `tenantId` SÍ viaja como parámetro explícito desde el cliente hacia una Server
 Action — todos del mismo tipo de operación: el **Super-Admin eligiendo/actuando
 sobre un tenant desde la consola de soporte** (no un usuario de tenant operando
@@ -156,16 +187,19 @@ Super-Admin/plataforma eligiendo entre tenants", nunca un atajo de conveniencia
 para un flujo de tenant normal; (b) implementar las mismas 3 capas; y (c)
 sumarse a la tabla de este documento — no basta con un comentario aislado.
 
-## d. Lectura de archivos de importación (`.xlsx`/CSV) — `lib/importacion/lector-archivo.ts`
+## d. Lectura de archivos de importación (`.xlsx`/CSV) — `packages/core/src/importacion/lector-archivo.ts`
 
 **Librería:** `xlsx` (SheetJS) fijado al build OFICIAL del CDN propio de
 SheetJS (ej. `https://cdn.sheetjs.com/xlsx-<ver>/xlsx-<ver>.tgz`), como
-`dependency` de `apps/web` — **nunca** al nombre `xlsx` a secas del registro
-npm (que resuelve a una versión antigua con CVEs conocidas de prototype
-pollution/ReDoS; los CVEs están corregidos en las versiones del CDN, que
-SheetJS no publica en npm). El pin correcto vive en la URL misma; ningún
-`npm update`/Dependabot debe "corregirla" a una versión del registro. `npm ci`
-la descarga del CDN y valida su integridad contra el hash del lockfile.
+`dependency` de `packages/core` (dueño real del lector) y, en espejo, de
+`apps/web` (que también la lista directa en su propio `package.json`) —
+**nunca** al nombre `xlsx` a secas del registro npm (que resuelve a una
+versión antigua con CVEs conocidas de prototype pollution/ReDoS; los CVEs
+están corregidos en las versiones del CDN, que SheetJS no publica en npm). El
+pin correcto vive en la URL misma; ningún Dependabot/actualización automática
+debe "corregirla" a una versión del registro. Si la versión del CDN cambia,
+actualizar el pin en AMBOS `package.json` en el mismo commit. `pnpm install`
+la descarga del CDN y valida su integridad contra el hash de `pnpm-lock.yaml`.
 
 **Por qué SheetJS y no las alternativas:** un `.xlsx` real puede usar
 `t="inlineStr"` para el texto de sus celdas (codificación OOXML válida, sin
@@ -177,7 +211,7 @@ CLAUDE.md).
 **Función pública única — el ÚNICO punto de entrada de todos los consumidores:**
 
 ```
-// apps/web/lib/importacion/lector-archivo.ts
+// packages/core/src/importacion/lector-archivo.ts
 leerFilasDeArchivo(
   archivo: File,
   opciones?: OpcionesLectorArchivo,
@@ -371,61 +405,126 @@ pasa por el middleware normal, NO se agrega al bypass; (3) si necesita
 nunca asumir que el middleware lo dejó en un header; (4) sumar el caso a esta
 sección si introduce un patrón de autenticación distinto a `CRON_SECRET`.
 
-## h. Gate "subdominio inexistente → 404 genérico, nunca login"
+## h. Resolución de tenant: por SESIÓN/MEMBRESÍA, nunca por subdominio
 
-**Archivos:** `apps/web/lib/tenant/gate-subdominio.ts` (el helper),
-`apps/web/app/(auth)/layout.tsx` (login/registro),
-`apps/web/app/(app)/layout.tsx` (app shell), `apps/web/app/not-found.tsx` (la
-404 genérica), el resolver de tenant público reutilizado (§b),
-`apps/web/lib/tenant/subdominio.ts` (`SUBDOMINIOS_RESERVADOS`).
+**Archivos:** `packages/db/src/auth/usuario-actual.ts` (`obtenerUsuarioActual`,
+memoizado por-request con `React.cache`, §f), `packages/db/src/auth/exigir-permiso.ts`
+(`exigirPermiso`, gate de Server Actions), `packages/db/src/auth/exigir-super-admin.ts`,
+la tabla `usuarios_tenants` (membresía real), `super_admins`/
+`super_admin_tenant_activo` (modo soporte, ver §c), y en BD la función
+`private.current_tenant_id()` (creada en `20260713090000`; devuelve `NULL`
+para un miembro de un tenant bloqueado desde `20260815100000`, y resuelve el
+modo soporte desde `20260714221000`).
 
-**El problema que resuelve:** el middleware resuelve el subdominio SOLO
-parseando el header `Host` — por diseño **nunca consulta la BD**. Sin este
-gate, un subdominio que no corresponde a NINGÚN tenant
-(`noexiste.factura-eletronica.app`) llega sin sesión, el middleware redirige a `/login`
-(mismo host), y el usuario ve el formulario de login como si `noexiste` fuera
-una cuenta real — filtra indirectamente "esto podría ser un tenant" y es una
-experiencia incorrecta para cualquier URL mal tecleada.
+**Contexto — por qué NO es por subdominio:** el framework base del que sale
+este repo ("casilleros") sí daba una URL propia por tenant (subdominio =
+tenant). **Este producto es una desviación deliberada de esa convención**
+(regla dura #1 de `CLAUDE.md`): hay UN solo dashboard, en un host FIJO
+(`web.factura-eletronica.app`), para TODOS los tenants — el subdominio de la
+request no puede llevar el tenant porque todos comparten el mismo host. El
+tenant sale exclusivamente de qué usuario inició sesión.
 
 **Contrato exacto:**
-1. `subdominioActualNoExiste(): Promise<boolean>` es un wrapper delgado sobre
-   el resolver de tenant público (§b, sin duplicar la query): devuelve `true`
-   ÚNICAMENTE cuando el resultado es `no_encontrado` (ningún tenant tiene ese
-   subdominio). Los otros casos devuelven `false` (el gate NO aplica):
-   - `{ tenant }` (existe y activo) → normal.
-   - `sin_subdominio` (host de plataforma: raíz, `www`, `web`, `localhost`) →
-     normal, short-circuit sin consultar BD.
-   - `bloqueado` (el tenant EXISTE pero no está `activo`) → **NO** 404, a
-     propósito: dar 404 rompería el flujo de expulsión de tenant bloqueado
-     (regla dura #9). El gate es estrictamente de EXISTENCIA, no de estado.
-   - `error_servidor` (falta la key de servicio o falla transitoria) →
-     **fail-OPEN**, a propósito: un error de infraestructura NUNCA debe
-     convertirse en un 404 masivo para TODOS los subdominios.
-2. **Mensaje genérico (regla dura de no filtrar información):**
-   `app/not-found.tsx` muestra un mensaje ÚNICO y genérico ("Esta página no
-   existe") sin importar la causa real — el visitante NUNCA puede distinguir,
-   por la respuesta HTTP ni por el copy, si el subdominio nunca existió, es una
-   palabra reservada, o fue dado de baja.
-3. **Dos consumidores, mismo contrato:**
-   - `app/(auth)/layout.tsx` (login/registro): corre el gate ANTES de renderizar
-     — cubre el visitante sin sesión con subdominio basura.
-   - `app/(app)/layout.tsx` (app shell): corre el gate **en paralelo** con la
-     resolución de usuario (`Promise.all`, sin sumar latencia) y ANTES de
-     cualquier rama existente. Aplica **también a usuarios YA logueados** —
-     cubre una sesión vieja apuntando a un host que dejó de existir. Sale del
-     alcance el caso "el subdominio existe pero es de OTRO tenant al de la
-     sesión" (eso se resuelve por el tenant de la SESIÓN, no del host).
-4. **El middleware NO cambia y sigue sin consultar la BD** — toda la resolución
-   real de existencia se hace server-side en los dos layouts, vía el mismo
-   helper. El costo de una consulta a `tenants` por request solo se paga donde
-   hace falta decidir render (layouts), no en el middleware que corre para todo.
+1. `obtenerUsuarioActual()` resuelve `auth.uid()` vía `supabase.auth.getUser()`
+   y, en paralelo (un solo round-trip efectivo), consulta la membresía real
+   del usuario en `usuarios_tenants` (re-validando `estado = 'activo'` en la
+   propia app, regla dura #3 — nunca confiar ciegamente en que RLS ya filtró
+   todo), si es Super-Admin (`super_admins`) y su selección de modo soporte
+   (`super_admin_tenant_activo`, §c) y si está bloqueado
+   (`tenant_bloqueado_propio()`). El `tenantId` operable de la request sale
+   EXCLUSIVAMENTE de ese contexto — nunca de un header, cookie, query param o
+   campo de formulario que el cliente controle.
+2. **La garantía real de aislamiento es RLS en BD, no la capa de aplicación:**
+   toda política `tenant_id = private.current_tenant_id()` de cualquier tabla
+   de negocio depende de esa función de Postgres, que lee `usuarios_tenants` a
+   partir de `auth.uid()` DENTRO de la base — no de nada que la app le pase.
+   Un bug en la capa de aplicación (punto 3) puede dar una peor experiencia,
+   nunca debería poder filtrar datos de otro tenant.
+3. `exigirPermiso(permiso)` es el ÚNICO gate de aplicación para Server
+   Actions — mismo criterio del punto 1, **nunca** recibe `tenantId` de
+   parámetro. Arma la membresía EFECTIVA (real, o la sintética de modo
+   soporte, §c) y valida rol + permiso ANTES de tocar cualquier dato; es
+   defensa en profundidad de UX (mensaje de negocio en español en vez de un
+   `42501` crudo de Postgres), no la garantía real.
+4. **Un usuario = una membresía activa** (regla dura #2: "un usuario = un
+   tenant"). Sin membresía activa, `membresia` es `null` y el app shell
+   muestra `<SinEquipo/>`. El único estado intermedio válido es un
+   Super-Admin sin tenant seleccionado ("modo plataforma"), resuelto vía
+   `modoSoporte`/`super_admin_tenant_activo` — ver §c para la ÚNICA excepción
+   real donde un `tenantId` SÍ viaja como parámetro explícito.
+5. `apps/web/middleware.ts` solo decide "¿hay sesión, sí o no?" (sin cookie
+   de Supabase → redirect a `/login`) — **nunca** resuelve tenant. No existe
+   ningún gate de "subdominio inexistente → 404" en este producto: no hay
+   nada que verificar, porque el host es fijo y no codifica tenant.
 
-**No es un uso nuevo de `service_role`:** el gate reutiliza exactamente la
-misma función/lectura ya aceptada (§b), sin tocar ninguna tabla ni caller de
-escritura nuevos.
+**Deuda heredada — pipeline de subdominio SIN uso real, no lo reutilices:**
+el código todavía trae, sin ningún consumidor en runtime, la resolución de
+tenant POR SUBDOMINIO heredada de "casilleros": `packages/core/src/tenant/subdominio.ts`
+(`resolverSubdominio`, `TENANT_SUBDOMAIN_HEADER`, `SUBDOMINIOS_RESERVADOS`),
+que `apps/web/middleware.ts` **sigue calculando y seteando** en cada request
+(header `x-tenant-subdominio`) sin que nada lo lea para gating;
+`packages/db/src/tenant/gate-subdominio.ts` (`subdominioActualNoExiste()`) y
+`packages/db/src/tenant/tenant-publico.ts` (`resolverTenantPublicoPorSubdominio()`
+— el único punto de `packages/db` que importa `createAdminClient` FUERA del
+inventario vigente de §b, aunque nadie lo invoca hoy); y
+`apps/web/lib/tenant/enlace-tenant.ts` (`construirUrlPublicaTenant`, 0
+llamadores). Su uso real se quitó de los layouts en el commit `705d0ea`
+(Fase 6, "modelo de tenant POR SESIÓN, sin service-role en web"), pero los
+ARCHIVOS siguen existiendo y `@factura/db` los sigue exportando
+(`./tenant/tenant-publico`, `./tenant/gate-subdominio` en
+`packages/db/package.json`) — nada impide hoy que un PR futuro los
+reimporte por error, reintroduciendo tanto un camino a `service_role`
+alcanzable desde `apps/web` (violaría §b) como un modelo de tenant que
+contradice este §h. **Esto es deuda de la migración, señalada acá el
+2026-08-26 por `arquitecto-app`, no una decisión vigente** — su limpieza
+(borrar los archivos y el cálculo de subdominio del middleware, o sacarlos de
+los `exports` de `packages/db`/`packages/core` mientras no tengan consumidor)
+queda para que `project-manager` la priorice. Hasta entonces, ningún código
+nuevo debe apoyarse en `TENANT_SUBDOMAIN_HEADER`/`resolverSubdominio`/
+`subdominioActualNoExiste`/`construirUrlPublicaTenant` para gating o
+resolución de tenant real — el contrato vigente es el de este §h.
 
-**`SUBDOMINIOS_RESERVADOS`** (`lib/tenant/subdominio.ts`) es un set curado de
-palabras de infraestructura/producto/soporte que ningún tenant puede registrar.
-La lista de la APP es la autoritativa (el CHECK de BD es solo defensa en
-profundidad); ampliarla no requiere migración. Ningún subdominio reservado
-resuelve a un tenant real, así que caen solos en el 404 de este gate.
+## i. Topología de deploy en Vercel (Turborepo, 3 apps)
+
+**Confirmado por `arquitecto-app` el 2026-08-26** al cerrar la migración a
+Turborepo (Fases 1-6, commits `5a38309`…`705d0ea`): las tres apps
+(`apps/web`, `apps/api`, `apps/landing`) se despliegan como **tres Vercel
+Projects separados**, cada uno con su propio **Root Directory** apuntando a
+`apps/web`, `apps/api` y `apps/landing` respectivamente (configuración de
+Dashboard/Project Settings, fuera del repo) — NO un solo proyecto con
+reescrituras internas. Es la topología ya vigente (`apps/api/next.config.ts`
+trae la nota "Framework Preset = Next.js" de un incidente previo, evidencia de
+que el proyecto YA existía como tal antes de esta migración estructural).
+
+**Por qué NO hace falta `vercel.json` en `apps/web` ni en `apps/landing`:**
+`vercel.json` solo es necesario cuando hay que declarar algo que el Dashboard
+no cubre — hoy el único caso real del monorepo son los `crons` de
+`apps/api/vercel.json` (`crons` SOLO puede declararse por archivo, nunca por
+Dashboard). Ni `apps/web` ni `apps/landing` tienen crons ni ninguna otra
+config que solo `vercel.json` resuelva; su Build/Install/Output Command usan
+el default de Next.js, y Vercel ya detecta el monorepo (pnpm workspace +
+`turbo.json` en la raíz) sin configuración adicional — basta con el Root
+Directory del proyecto y "Include files outside the Root Directory in the
+Build" activado (necesario para que el build de cada app resuelva
+`packages/*` vía `workspace:*`, ya que `transpilePackages` en cada
+`next.config.ts` los consume como TypeScript crudo, sin build propio — ver
+`apps/web/next.config.ts`, `apps/api/next.config.ts`,
+`apps/landing/next.config.ts`). Si una futura necesidad de `web`/`landing`
+exige algo que el Dashboard no cubre (headers/redirects custom, otro cron,
+`functions` con runtime distinto), agregar su propio `vercel.json` puntual es
+una decisión LOCAL y reversible — no requiere pasar por `arquitecto-app`
+salvo que cambie routing, dominios o variables de entorno.
+
+**Instalación/build en CI y en Vercel deben usar el mismo gestor de
+paquetes:** desde esta ronda (ver Task 2, `.github/workflows/ci.yml`), tanto
+CI como Vercel instalan con `pnpm` (declarado en
+`"packageManager": "pnpm@9.15.9"` del `package.json` raíz) — Vercel lo
+detecta automáticamente por ese campo sin configuración extra por proyecto.
+
+**Variables de entorno:** cada uno de los 3 Vercel Projects mantiene su
+PROPIO set de env vars por ambiente (Development/Preview/Production) desde su
+Dashboard — `apps/api` es la única superficie con `SUPABASE_SERVICE_ROLE_KEY`
+(regla dura #1/§b); `apps/web`/`apps/landing` nunca deben tenerla configurada,
+ni siquiera en Preview. Esto NO cambió con la migración a Turborepo — sigue
+siendo responsabilidad de quien administra cada Project en el Dashboard, este
+documento solo documenta la topología, no gestiona los valores.

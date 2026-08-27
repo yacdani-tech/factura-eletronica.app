@@ -264,6 +264,13 @@ importers:
       zod:
         specifier: ^3.24.1
         version: 3.25.76
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.19.43
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
 
   packages/db:
     dependencies:
@@ -289,6 +296,9 @@ importers:
       '@types/react':
         specifier: ^19
         version: 19.2.18
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
 
   packages/hacienda-adapter:
     devDependencies:
@@ -337,6 +347,9 @@ importers:
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.2.8)
+      next:
+        specifier: '*'
+        version: 15.5.24(@playwright/test@1.62.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react:
         specifier: '*'
         version: 19.2.8
@@ -353,6 +366,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.5(@types/react@19.2.18)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
 
 packages:
 

@@ -25,7 +25,11 @@
     "next": "*",
     "react": "*"
   },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
   "devDependencies": {
-    "@types/react": "^19"
+    "@types/react": "^19",
+    "typescript": "^5.7.2"
   }
 }

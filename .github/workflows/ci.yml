@@ -1,7 +1,12 @@
 name: CI
 
-# Base de testing del monorepo. TRES jobs:
-#   - `test`: Vitest (unit) de los workspaces del monorepo (web, landing).
+# Base de testing del monorepo (Turborepo + pnpm workspaces). TRES jobs:
+#   - `quality`: `turbo run typecheck` + `turbo run test` desde la raíz —
+#     cubre TODO el monorepo (apps/web, apps/api, apps/landing, packages/core,
+#     packages/db, packages/ui, packages/hacienda-adapter). Turbo solo corre
+#     el script en los workspaces que lo declaran (los que todavía no tienen
+#     tests declaran igual "typecheck"; si más adelante declaran "test", se
+#     suman solos a la cobertura sin tocar este workflow).
 #   - `e2e-gc`: limpieza previa de tenants efímeros huérfanos (best-effort).
 #   - `e2e`: Playwright, la suite de flujos de TENANT con correo/contraseña,
 #     contra el proyecto Supabase remoto de desarrollo, como MATRIZ de shards en
@@ -31,30 +36,41 @@ concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Versión de pnpm fijada UNA sola vez acá, en espejo del `packageManager` del
+# `package.json` raíz (`pnpm@9.15.9`) — si ese campo cambia de versión, este
+# valor se actualiza en el mismo commit para que CI instale exactamente lo
+# mismo que un desarrollador local o Vercel (que sí lee `packageManager`
+# automáticamente).
+env:
+  PNPM_VERSION: "9.15.9"
+
 jobs:
-  test:
-    name: Vitest (${{ matrix.workspace }})
+  quality:
+    name: Typecheck + Vitest (turbo, todo el monorepo)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        workspace: [web, landing]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Configurar Node.js (según .nvmrc / engines)
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+          cache: "pnpm"
 
-      - name: Instalar dependencias (workspaces npm)
-        run: npm ci
+      - name: Instalar dependencias (workspace pnpm, lockfile congelado)
+        run: pnpm install --frozen-lockfile
 
-      - name: Vitest — ${{ matrix.workspace }}
-        run: npm run test:${{ matrix.workspace }}
+      - name: Typecheck — turbo run typecheck (todos los workspaces)
+        run: pnpm run typecheck
+
+      - name: Vitest — turbo run test (workspaces con script "test")
+        run: pnpm run test
 
   # GC de red de seguridad ANTES de la matriz: borra tenants efímeros
   # (`e2e-ef-`) de corridas previas que hayan crasheado antes de su teardown.
@@ -68,19 +84,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - name: Configurar Node.js (según .nvmrc / engines)
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: package-lock.json
-      - name: Instalar dependencias (workspaces npm)
-        run: npm ci
+          cache: "pnpm"
+
+      - name: Instalar dependencias (workspace pnpm, lockfile congelado)
+        run: pnpm install --frozen-lockfile
+
       - name: Limpiar tenants efímeros huérfanos (best-effort, nunca fatal)
         working-directory: apps/web
         env:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: npm run test:e2e:gc
+        run: pnpm run test:e2e:gc
 
   e2e:
     name: Playwright E2E (shard ${{ matrix.shard }})
@@ -112,18 +135,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
       - name: Configurar Node.js (según .nvmrc / engines)
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+          cache: "pnpm"
 
-      - name: Instalar dependencias (workspaces npm)
-        run: npm ci
+      - name: Instalar dependencias (workspace pnpm, lockfile congelado)
+        run: pnpm install --frozen-lockfile
 
       - name: Instalar navegadores de Playwright (Chromium + deps del sistema)
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
         working-directory: apps/web
 
       # Idempotente: correrlo en cada corrida de CI es seguro. Se SALTA (no falla
@@ -141,7 +168,7 @@ jobs:
             echo "SUPABASE_SERVICE_ROLE_KEY no configurada — se salta el seed (los specs se auto-saltan igual)."
             exit 0
           fi
-          npm run test:e2e:seed
+          pnpm run test:e2e:seed
 
       # Este job ES un shard (matrix.shard de N). Corre SU fracción de la suite
       # con `--shard`. `--workers=1` por shard A PROPÓSITO: la velocidad sale del
@@ -150,7 +177,7 @@ jobs:
         working-directory: apps/web
         env:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        run: npm run test:e2e -- --shard=${{ matrix.shard }}/4 --workers=1
+        run: pnpm run test:e2e -- --shard=${{ matrix.shard }}/4 --workers=1
 
       - name: Subir reporte de Playwright del shard ${{ matrix.shard }} (siempre, para diagnosticar fallos)
         if: always()
