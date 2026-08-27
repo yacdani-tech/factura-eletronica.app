@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   // Paquete interno JIT: se consume como TypeScript crudo (sin build propio),
   // así que Next debe transpilarlo como parte del build de esta app.
-  transpilePackages: ["@factura/core"],
+  transpilePackages: ["@factura/core", "@factura/db"],
   // El default de `bodySizeLimit` de Server Actions es 1 MB — demasiado bajo
   // para flujos que envían archivos subidos (importaciones/cargas masivas) a
   // una server action vía FormData. Sin este override, un archivo de varios MB

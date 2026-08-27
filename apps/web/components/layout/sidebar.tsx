@@ -17,7 +17,7 @@ import { cn } from "@factura/core/utils";
 import { navItems, navNavegandoTexto, navSinPermisoTexto, type NavIconName } from "@/lib/nav";
 import { puede } from "@factura/core/permisos";
 import { usePreferenciaSidebarContraida } from "@/components/layout/usar-preferencia-sidebar";
-import type { RolUsuario } from "@/lib/auth/usuario-actual";
+import type { RolUsuario } from "@factura/db/auth/usuario-actual";
 
 const iconMap: Record<NavIconName, LucideIcon> = {
   LayoutDashboard,

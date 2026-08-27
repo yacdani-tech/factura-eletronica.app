@@ -1,0 +1,31 @@
+{
+  "name": "@factura/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./supabase/server": "./src/supabase/server.ts",
+    "./supabase/client": "./src/supabase/client.ts",
+    "./supabase/admin": "./src/supabase/admin.ts",
+    "./supabase/middleware": "./src/supabase/middleware.ts",
+    "./tenant/tenant-publico": "./src/tenant/tenant-publico.ts",
+    "./tenant/gate-subdominio": "./src/tenant/gate-subdominio.ts",
+    "./tenant/branding": "./src/tenant/branding.ts",
+    "./auth/usuario-actual": "./src/auth/usuario-actual.ts",
+    "./auth/exigir-permiso": "./src/auth/exigir-permiso.ts",
+    "./auth/exigir-super-admin": "./src/auth/exigir-super-admin.ts"
+  },
+  "dependencies": {
+    "@factura/core": "workspace:*",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "2.110.2",
+    "server-only": "^0.0.1"
+  },
+  "peerDependencies": {
+    "next": "*",
+    "react": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^19"
+  }
+}

@@ -5,12 +5,12 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { Topbar } from "@/components/layout/topbar";
 import { SinEquipo } from "@/components/auth/sin-equipo";
 import { ShellSoporte } from "@/components/soporte/shell-soporte";
-import { calcularMembresiaEfectiva, obtenerUsuarioActual } from "@/lib/auth/usuario-actual";
+import { calcularMembresiaEfectiva, obtenerUsuarioActual } from "@factura/db/auth/usuario-actual";
 import { decidirVistaAppShell } from "@/lib/auth/decidir-vista-app-shell";
-import { obtenerBrandingTenant } from "@/lib/tenant/branding";
+import { obtenerBrandingTenant } from "@factura/db/tenant/branding";
 import { PATHNAME_HEADER } from "@/lib/servidor/pathname-header";
 import { esRutaConsolaSoporte, RUTA_CONSOLA_SOPORTE } from "@/lib/soporte/rutas";
-import { subdominioActualNoExiste } from "@/lib/tenant/gate-subdominio";
+import { subdominioActualNoExiste } from "@factura/db/tenant/gate-subdominio";
 
 /**
  * Layout del app shell. Una sola interfaz para todos los roles

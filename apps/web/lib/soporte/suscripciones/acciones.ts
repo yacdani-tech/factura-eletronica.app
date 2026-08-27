@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 
-import { createClient } from "@/lib/supabase/server";
-import { exigirSuperAdmin } from "@/lib/auth/exigir-super-admin";
+import { createClient } from "@factura/db/supabase/server";
+import { exigirSuperAdmin } from "@factura/db/auth/exigir-super-admin";
 import { idSchema, primerErrorZod } from "@factura/core/validaciones/auth";
 
 /**

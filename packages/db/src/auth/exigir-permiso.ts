@@ -3,9 +3,9 @@ import {
   calcularMembresiaEfectiva,
   type MembresiaActual,
   type UsuarioActual,
-} from "@/lib/auth/usuario-actual";
+} from "./usuario-actual";
 import { puede, type Permiso } from "@factura/core/permisos";
-import { textosPermisos } from "@/lib/textos/permisos";
+import { textosPermisos } from "./textos-permisos";
 
 /**
  * Guard reutilizable para Server Actions (regla dura #3: "toda acción

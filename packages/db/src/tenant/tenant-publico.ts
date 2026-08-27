@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "../supabase/admin";
 import { TENANT_SUBDOMAIN_HEADER } from "@factura/core/tenant/subdominio";
 
 /**

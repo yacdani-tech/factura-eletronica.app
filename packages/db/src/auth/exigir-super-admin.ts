@@ -1,5 +1,5 @@
-import { obtenerUsuarioActual, type ContextoUsuario, type UsuarioActual } from "@/lib/auth/usuario-actual";
-import { textosPermisos } from "@/lib/textos/permisos";
+import { obtenerUsuarioActual, type ContextoUsuario, type UsuarioActual } from "./usuario-actual";
+import { textosPermisos } from "./textos-permisos";
 
 /**
  * Guard análogo a `exigirPermiso` (`lib/auth/exigir-permiso.ts`), pero para

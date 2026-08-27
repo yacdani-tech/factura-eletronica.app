@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@factura/db/supabase/server";
 
 export type EstadoTenant = "activo" | "bloqueado";
 

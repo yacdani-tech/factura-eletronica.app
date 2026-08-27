@@ -17,7 +17,7 @@ import { textosAuth } from "@/lib/textos/auth";
 import { textosSoporte } from "@/lib/textos/soporte";
 import { cerrarSesion } from "@/lib/auth/acciones";
 import { salirDeSoporte } from "@/lib/soporte/acciones";
-import type { ModoSoporte } from "@/lib/auth/usuario-actual";
+import type { ModoSoporte } from "@factura/db/auth/usuario-actual";
 
 interface UsuarioTopbar {
   nombre: string | null;

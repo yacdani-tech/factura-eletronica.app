@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@factura/db/supabase/server";
 import type { EstadoTenant } from "@/lib/soporte/plataforma/datos";
 import type { EstadoSuscripcionFactura } from "@factura/core/suscripcion/tipos";
 import type { SuscripcionTenantFila, SuscripcionesTenantResumen } from "@/lib/soporte/suscripciones/tipos";

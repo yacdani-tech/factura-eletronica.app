@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { PantallaCentrada } from "@/components/layout/pantalla-centrada";
-import { subdominioActualNoExiste } from "@/lib/tenant/gate-subdominio";
+import { subdominioActualNoExiste } from "@factura/db/tenant/gate-subdominio";
 
 /**
  * Layout de las pantallas de autenticación (login, registro): Card centrada,

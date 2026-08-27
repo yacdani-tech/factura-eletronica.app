@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@factura/db/supabase/server";
 import { textosAuth } from "@/lib/textos/auth";
 import { mensajeErrorLogin } from "@/lib/auth/errores";
 import { loginSchema } from "@factura/core/validaciones/auth";

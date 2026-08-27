@@ -1,4 +1,4 @@
-import type { ContextoUsuario } from "@/lib/auth/usuario-actual";
+import type { ContextoUsuario } from "@factura/db/auth/usuario-actual";
 
 /**
  * Qué renderiza `app/(app)/layout.tsx` para una sesión YA autenticada

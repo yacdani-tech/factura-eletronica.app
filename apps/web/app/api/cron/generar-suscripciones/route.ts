@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "@factura/db/supabase/admin";
 
 /**
  * Ruta de Vercel Cron protegida por `CRON_SECRET` — dispara la generación

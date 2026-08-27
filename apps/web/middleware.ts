@@ -6,7 +6,7 @@ import { NextResponse, type NextRequest } from "next/server";
 // "The Edge Function 'middleware' is referencing unsupported modules". Las
 // páginas sí resuelven `@/` (se compilan aparte), pero el middleware NO — por eso
 // acá van relativos. Sus dependencias no usan `@/`, así que el grafo Edge cierra.
-import { updateSession } from "./lib/supabase/middleware";
+import { updateSession } from "@factura/db/supabase/middleware";
 import { TENANT_SUBDOMAIN_HEADER, obtenerDominioRaiz, resolverSubdominio } from "@factura/core/tenant/subdominio";
 import { isMaintenanceMode } from "@factura/core/maintenance";
 import { PATHNAME_HEADER } from "./lib/servidor/pathname-header";

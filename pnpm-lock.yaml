@@ -70,6 +70,9 @@ importers:
       '@factura/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@factura/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@radix-ui/react-avatar':
         specifier: ^1.1.1
         version: 1.2.6(@types/react-dom@19.2.5(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -212,6 +215,31 @@ importers:
       zod:
         specifier: ^3.24.1
         version: 3.25.76
+
+  packages/db:
+    dependencies:
+      '@factura/core':
+        specifier: workspace:*
+        version: link:../core
+      '@supabase/ssr':
+        specifier: ^0.5.2
+        version: 0.5.2(@supabase/supabase-js@2.110.2)
+      '@supabase/supabase-js':
+        specifier: 2.110.2
+        version: 2.110.2
+      next:
+        specifier: '*'
+        version: 15.5.24(@playwright/test@1.62.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react:
+        specifier: '*'
+        version: 19.2.8
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+    devDependencies:
+      '@types/react':
+        specifier: ^19
+        version: 19.2.18
 
 packages:
 

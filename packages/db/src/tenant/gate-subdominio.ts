@@ -1,4 +1,4 @@
-import { resolverTenantPublicoDesdeRequest } from "@/lib/tenant/tenant-publico";
+import { resolverTenantPublicoDesdeRequest } from "./tenant-publico";
 
 /**
  * Gate de "existencia de tenant" para los layouts server-side ((auth) y

@@ -3,8 +3,8 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-import { createClient } from "@/lib/supabase/server";
-import { exigirSuperAdmin } from "@/lib/auth/exigir-super-admin";
+import { createClient } from "@factura/db/supabase/server";
+import { exigirSuperAdmin } from "@factura/db/auth/exigir-super-admin";
 import { primerErrorZod, idSchema } from "@factura/core/validaciones/auth";
 import { textosSoporte } from "@/lib/textos/soporte";
 import { RUTA_CONSOLA_SOPORTE } from "@/lib/soporte/rutas";

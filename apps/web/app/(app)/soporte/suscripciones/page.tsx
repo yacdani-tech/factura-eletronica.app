@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { exigirSuperAdmin } from "@/lib/auth/exigir-super-admin";
+import { exigirSuperAdmin } from "@factura/db/auth/exigir-super-admin";
 import { listarSuscripcionesTenants } from "@/lib/soporte/suscripciones/datos";
 import { AccionesSuscripcion } from "@/components/soporte/acciones-suscripcion";
 import type { EstadoSuscripcionFactura } from "@factura/core/suscripcion/tipos";
