@@ -2,27 +2,35 @@
   "name": "factura-eletronica",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": "^20.19.0 || >=22.13.0"
   },
-  "workspaces": [
-    "apps/*"
-  ],
   "scripts": {
-    "dev:web": "npm run dev --workspace=factura-eletronica-web",
-    "dev:landing": "npm run dev --workspace=factura-eletronica-landing",
-    "build:web": "npm run build --workspace=factura-eletronica-web",
-    "build:landing": "npm run build --workspace=factura-eletronica-landing",
-    "lint:web": "npm run lint --workspace=factura-eletronica-web",
-    "lint:landing": "npm run lint --workspace=factura-eletronica-landing",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=factura-eletronica-web",
+    "dev:landing": "turbo run dev --filter=factura-eletronica-landing",
+    "dev:api": "turbo run dev --filter=factura-eletronica-api",
+    "build:web": "turbo run build --filter=factura-eletronica-web",
+    "build:landing": "turbo run build --filter=factura-eletronica-landing",
+    "build:api": "turbo run build --filter=factura-eletronica-api",
     "test:hooks": "node --test .claude/hooks/lib/*.test.mjs",
-    "test:landing": "npm run test --workspace=factura-eletronica-landing",
-    "test:web": "npm run test --workspace=factura-eletronica-web",
-    "test:e2e:web": "npm run test:e2e --workspace=factura-eletronica-web",
-    "test:e2e:seed:web": "npm run test:e2e:seed --workspace=factura-eletronica-web"
+    "test:web": "turbo run test --filter=factura-eletronica-web",
+    "test:landing": "turbo run test --filter=factura-eletronica-landing",
+    "test:e2e:web": "pnpm --filter factura-eletronica-web test:e2e",
+    "test:e2e:seed:web": "pnpm --filter factura-eletronica-web test:e2e:seed"
   },
-  "overrides": {
-    "@supabase/supabase-js": "2.110.2",
-    "@supabase/realtime-js": "2.110.2"
+  "devDependencies": {
+    "turbo": "^2.3.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@supabase/supabase-js": "2.110.2",
+      "@supabase/realtime-js": "2.110.2"
+    }
   }
 }
