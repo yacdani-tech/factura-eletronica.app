@@ -59,3 +59,6 @@ apps/web/playwright/.cache/
 
 # === Credenciales del carril de QA (Trello) — NUNCA se commitean ===
 .env.qa
+
+# === Turborepo cache ===
+.turbo/
