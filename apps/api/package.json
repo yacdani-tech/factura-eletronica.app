@@ -1,0 +1,36 @@
+{
+  "name": "factura-eletronica-api",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || >=22.13.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@factura/core": "workspace:*",
+    "@factura/db": "workspace:*",
+    "@factura/hacienda-adapter": "workspace:*",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "2.110.2",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.1.0",
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "@supabase/supabase-js": "2.110.2",
+    "@supabase/realtime-js": "2.110.2"
+  }
+}

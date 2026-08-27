@@ -5,9 +5,12 @@ import { createAdminClient } from "@factura/db/supabase/admin";
 /**
  * Ruta de Vercel Cron protegida por `CRON_SECRET` — dispara la generación
  * DIARIA de facturas de suscripción de la plataforma. Un Cron de Vercel
- * (`apps/web/vercel.json`) pega acá una vez al día e invoca, con el cliente
+ * (`apps/api/vercel.json`) pega acá una vez al día e invoca, con el cliente
  * **service-role**, la RPC de sistema `public.asegurar_facturas_suscripcion_sistema()`
  * (SIN guard de auth, otorgada SOLO a `service_role`, migración `20260815094000`).
+ *
+ * Vive en `apps/api` (no en `apps/web`): esta es la ÚNICA superficie autorizada
+ * a usar `service_role`.
  *
  * AUTENTICACIÓN: header `Authorization: Bearer ${CRON_SECRET}` — comparación
  * directa (valor fijo de infraestructura, rotable en Vercel; no protege una
@@ -15,9 +18,7 @@ import { createAdminClient } from "@factura/db/supabase/admin";
  * devuelve `false` incondicionalmente (fail-closed: NUNCA corre sin secreto).
  *
  * SIN sesión de usuario, SIN tenant (regla dura #1 no aplica: no opera sobre
- * datos de UN tenant, genera para TODOS). `middleware.ts` deja pasar toda
- * request bajo `/api/cron/*` sin exigir sesión de Supabase — esta ruta
- * implementa su propia autenticación vía `CRON_SECRET`.
+ * datos de UN tenant, genera para TODOS).
  *
  * `force-dynamic`: nunca cachear (cada corrida debe generar en vivo).
  */

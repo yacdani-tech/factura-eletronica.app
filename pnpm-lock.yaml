@@ -16,6 +16,52 @@ importers:
         specifier: ^2.3.3
         version: 2.10.12
 
+  apps/api:
+    dependencies:
+      '@factura/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@factura/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@factura/hacienda-adapter':
+        specifier: workspace:*
+        version: link:../../packages/hacienda-adapter
+      '@supabase/ssr':
+        specifier: ^0.5.2
+        version: 0.5.2(@supabase/supabase-js@2.110.2)
+      '@supabase/supabase-js':
+        specifier: 2.110.2
+        version: 2.110.2
+      next:
+        specifier: ^15.1.0
+        version: 15.5.24(@playwright/test@1.62.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.19.43
+      '@types/react':
+        specifier: ^19
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.2.5(@types/react@19.2.18)
+      eslint:
+        specifier: ^8.57.1
+        version: 8.57.1
+      eslint-config-next:
+        specifier: ^15.1.0
+        version: 15.5.24(eslint@8.57.1)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
   apps/landing:
     dependencies:
       lucide-react:
