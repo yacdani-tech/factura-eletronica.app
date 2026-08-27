@@ -2,16 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "factura-eletronica-landing",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--workspace=apps/landing"],
+      "name": "factura-electronica-landing",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "factura-electronica-landing", "dev"],
       "port": 3000,
       "autoPort": true
     },
     {
-      "name": "factura-eletronica-web",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--workspace=apps/web"],
+      "name": "factura-electronica-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "factura-electronica-web", "dev"],
       "port": 3001
     }
   ]

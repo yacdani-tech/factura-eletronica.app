@@ -1,5 +1,5 @@
 {
-  "name": "factura-eletronica",
+  "name": "factura-electronica",
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@9.15.9",
@@ -12,17 +12,17 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "dev": "turbo run dev",
-    "dev:web": "turbo run dev --filter=factura-eletronica-web",
-    "dev:landing": "turbo run dev --filter=factura-eletronica-landing",
-    "dev:api": "turbo run dev --filter=factura-eletronica-api",
-    "build:web": "turbo run build --filter=factura-eletronica-web",
-    "build:landing": "turbo run build --filter=factura-eletronica-landing",
-    "build:api": "turbo run build --filter=factura-eletronica-api",
+    "dev:web": "turbo run dev --filter=factura-electronica-web",
+    "dev:landing": "turbo run dev --filter=factura-electronica-landing",
+    "dev:api": "turbo run dev --filter=factura-electronica-api",
+    "build:web": "turbo run build --filter=factura-electronica-web",
+    "build:landing": "turbo run build --filter=factura-electronica-landing",
+    "build:api": "turbo run build --filter=factura-electronica-api",
     "test:hooks": "node --test .claude/hooks/lib/*.test.mjs",
-    "test:web": "turbo run test --filter=factura-eletronica-web",
-    "test:landing": "turbo run test --filter=factura-eletronica-landing",
-    "test:e2e:web": "pnpm --filter factura-eletronica-web test:e2e",
-    "test:e2e:seed:web": "pnpm --filter factura-eletronica-web test:e2e:seed"
+    "test:web": "turbo run test --filter=factura-electronica-web",
+    "test:landing": "turbo run test --filter=factura-electronica-landing",
+    "test:e2e:web": "pnpm --filter factura-electronica-web test:e2e",
+    "test:e2e:seed:web": "pnpm --filter factura-electronica-web test:e2e:seed"
   },
   "devDependencies": {
     "turbo": "^2.3.3"

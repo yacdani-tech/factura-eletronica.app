@@ -6,10 +6,10 @@
  * `middleware.ts` como en cualquier helper server-side futuro.
  *
  * Convención del proyecto (spec §3, Proyecto 2 — App):
- *   - Dominio raíz (`factura-eletronica.app`) o `web.factura-eletronica.app` -> plataforma
+ *   - Dominio raíz (`factura-electronica.app`) o `web.factura-electronica.app` -> plataforma
  *     (login/registro de cuenta, dashboard sin tenant todavía resuelto).
  *   - `www.<dominio>` -> tratado igual que el dominio raíz (alias común).
- *   - `<sub>.factura-eletronica.app` -> tenant courier (el subdominio ES el tenant).
+ *   - `<sub>.factura-electronica.app` -> tenant courier (el subdominio ES el tenant).
  *   - Desarrollo: `localhost:3000` (sin subdominio) = plataforma;
  *     `<sub>.localhost:3000` = tenant `<sub>`, mismo criterio que producción.
  *
@@ -108,7 +108,7 @@ export function esSubdominioReservado(sub: string): boolean {
 }
 
 /** Dominio raíz por defecto si no hay override por env (producción real). */
-const DOMINIO_RAIZ_DEFECTO = "factura-eletronica.app";
+const DOMINIO_RAIZ_DEFECTO = "factura-electronica.app";
 
 function quitarPuerto(host: string): string {
   // IPv6 con puerto viene como "[::1]:3000" — no es un caso real de este
@@ -125,7 +125,7 @@ function quitarPuerto(host: string): string {
  * @param hostHeader  Valor crudo del header `Host` (puede incluir puerto).
  * @param dominioRaiz Dominio raíz de producción, sin subdominio (override vía
  *                    `NEXT_PUBLIC_APP_ROOT_DOMAIN`, útil si el dominio final
- *                    cambia). Default `factura-eletronica.app`.
+ *                    cambia). Default `factura-electronica.app`.
  * @returns el subdominio del tenant en minúsculas, o `null` si la request es
  *          de plataforma (dominio raíz, `www.`, `web.`, o localhost sin
  *          subdominio).

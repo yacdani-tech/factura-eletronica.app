@@ -12,7 +12,7 @@ import { headers } from "next/headers";
  * (Corregido 2026-07-15 #1: antes priorizaba `NEXT_PUBLIC_SITE_URL` por
  * encima del host real — si esa env var quedaba seteada en Vercel con el
  * valor de `.env.local`, TODO login con Google en producción volvía a
- * localhost:3000 en vez de a `web.factura-eletronica.app`.)
+ * localhost:3000 en vez de a `web.factura-electronica.app`.)
  *
  * (Corregido 2026-07-15 #2: `host.startsWith("localhost")` no cubre
  * subdominios de tenant en dev, ej. `demo.localhost:3000` — ese host NO

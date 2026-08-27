@@ -1,7 +1,7 @@
 # Config de Supabase Auth + checklist de aprovisionamiento
 
 Este documento tiene dos partes: (A) cómo cablear Supabase Auth (correo/
-contraseña + Google OAuth) para un proyecto derivado de `factura-eletronica`, y
+contraseña + Google OAuth) para un proyecto derivado de `factura-electronica`, y
 (B) un **checklist obligatorio** para cuando el set de migraciones de
 `supabase/migrations/` se aplica por primera vez a un proyecto Supabase
 **recién creado** (vía CLI/API, no vía el flujo normal del Dashboard) — dos

@@ -32,7 +32,7 @@ interface SidebarProps {
    * Nombre del courier (tenant EFECTIVO de la sesión — real o modo soporte,
    * ver `calcularMembresiaEfectiva`). `null` si no se pudo leer el branding
    * (degradación con gracia, nunca rompe el shell): conserva el wordmark
-   * default "factura-eletronica.app".
+   * default "factura-electronica.app".
    */
   tenantNombre: string | null;
   /** Logo subido por el courier (Storage), o `null` para el isotipo default. */
@@ -114,7 +114,7 @@ export function Sidebar({ rol, tenantNombre, logoUrl }: SidebarProps) {
     setHrefPendiente(null);
   }, [pathname]);
 
-  const nombreAccesible = tenantNombre ?? "factura-eletronica.app";
+  const nombreAccesible = tenantNombre ?? "factura-electronica.app";
 
   return (
     <aside
@@ -179,7 +179,7 @@ export function Sidebar({ rol, tenantNombre, logoUrl }: SidebarProps) {
               </span>
             ) : (
               <span className="hidden text-base font-bold leading-none text-foreground sm:inline">
-                plataforma<span className="text-[hsl(var(--verde-texto))]">.app</span>
+                factura-electronica<span className="text-[hsl(var(--verde-texto))]">.app</span>
               </span>
             ))}
           <span className="sr-only">{nombreAccesible} — Ir al resumen</span>

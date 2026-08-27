@@ -15,7 +15,7 @@ export function PantallaCentrada({ children }: { children: React.ReactNode }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-isotipo.svg" alt="" aria-hidden="true" className="h-8 w-8" />
           <span className="text-lg font-bold leading-none text-foreground">
-            plataforma<span className="text-[hsl(var(--verde-texto))]">.app</span>
+            factura-electronica<span className="text-[hsl(var(--verde-texto))]">.app</span>
           </span>
         </div>
         {children}

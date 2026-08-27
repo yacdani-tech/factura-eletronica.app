@@ -420,7 +420,7 @@ modo soporte desde `20260714221000`).
 este repo ("casilleros") sí daba una URL propia por tenant (subdominio =
 tenant). **Este producto es una desviación deliberada de esa convención**
 (regla dura #1 de `CLAUDE.md`): hay UN solo dashboard, en un host FIJO
-(`web.factura-eletronica.app`), para TODOS los tenants — el subdominio de la
+(`web.factura-electronica.app`), para TODOS los tenants — el subdominio de la
 request no puede llevar el tenant porque todos comparten el mismo host. El
 tenant sale exclusivamente de qué usuario inició sesión.
 

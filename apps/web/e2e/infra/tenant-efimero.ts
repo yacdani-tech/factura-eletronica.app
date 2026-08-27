@@ -22,7 +22,7 @@ import { clienteAdminE2E } from "../helpers";
  * prohibición de `service_role` de los contratos transversales rige el runtime,
  * no la infra que lo verifica.
  *
- * BASELINE (framework de factura-eletronica): este harness genérico crea SOLO el
+ * BASELINE (framework de factura-electronica): este harness genérico crea SOLO el
  * núcleo de plataforma — un tenant, su usuario admin y la membresía. NO siembra
  * ningún baseline de DOMINIO (perfiles de cobro, rutas/zonas, tipo de cambio,
  * catálogos, etc.): eso pertenece al producto derivado, que debe extender este

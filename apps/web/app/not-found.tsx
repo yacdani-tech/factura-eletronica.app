@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { textosComun } from "@/lib/textos/comun";
 
 export const metadata: Metadata = {
-  title: "Página no encontrada — factura-eletronica.app",
+  title: "Página no encontrada — factura-electronica.app",
   // Sin valor de SEO propio — mismo criterio que el resto de `apps/web`
   // (ver `app/layout.tsx`): es área privada, nunca se indexa.
   robots: { index: false, follow: false },

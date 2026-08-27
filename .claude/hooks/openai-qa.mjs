@@ -106,7 +106,7 @@ async function main() {
   if (!process.env.OPENAI_API_KEY) return;
 
   const prompt = `
-Actúa como QA externo de factura-eletronica.app.
+Actúa como QA externo de factura-electronica.app.
 
 Revisa este diff contra CLAUDE.md, el estándar de requisitos y los agentes.
 

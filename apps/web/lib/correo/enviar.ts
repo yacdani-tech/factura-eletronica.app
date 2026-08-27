@@ -48,7 +48,7 @@ export interface EnviarCorreoInput {
  * el dominio propio para que Resend acepte el envío.
  */
 function remitentePorDefecto(): string {
-  return process.env.RESEND_FROM_EMAIL || "no-reply@factura-eletronica.app";
+  return process.env.RESEND_FROM_EMAIL || "no-reply@factura-electronica.app";
 }
 
 function envioDeCorreoDesactivado(): boolean {

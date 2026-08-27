@@ -7,14 +7,14 @@ import { TooltipProvider } from "@factura/ui/tooltip";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
-// apps/web es el área privada de login/dashboard (web.factura-eletronica.app y todo
+// apps/web es el área privada de login/dashboard (web.factura-electronica.app y todo
 // subdominio de tenant) — NUNCA debe indexarse, con o sin mantenimiento. La
-// única propiedad pública de factura-eletronica.app es apps/landing (dominio raíz).
+// única propiedad pública de factura-electronica.app es apps/landing (dominio raíz).
 export const metadata: Metadata = {
-  title: "factura-eletronica.app",
+  title: "factura-electronica.app",
   description: "Facturación en segundos. La plataforma de facturación para couriers.",
   robots: { index: false, follow: false },
 };

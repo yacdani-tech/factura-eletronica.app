@@ -1,10 +1,10 @@
 ---
 name: nueva-app
-description: Instancia una app nueva a partir del framework factura-eletronica — dado el nombre, el dominio, el documento de requisitos y el branding, clona el esqueleto multi-tenant, reemplaza los tokens de marca, genera el spec + el design-system + el plan, deja el runbook de Supabase y arranca el desarrollo. Usar cuando el dueño del producto quiere crear "otra app" del mismo estilo (SaaS web multi-tenant con login) sobre esta base.
+description: Instancia una app nueva a partir del framework factura-electronica — dado el nombre, el dominio, el documento de requisitos y el branding, clona el esqueleto multi-tenant, reemplaza los tokens de marca, genera el spec + el design-system + el plan, deja el runbook de Supabase y arranca el desarrollo. Usar cuando el dueño del producto quiere crear "otra app" del mismo estilo (SaaS web multi-tenant con login) sobre esta base.
 allowed-tools: Read, Grep, Glob, Write, Edit, Bash
 ---
 
-# /nueva-app — Bootstrap de una app nueva desde `factura-eletronica`
+# /nueva-app — Bootstrap de una app nueva desde `factura-electronica`
 
 Este skill instancia una app nueva a partir del framework base (este repo). El
 resultado es un repo hermano que YA compila en verde (multi-tenant + login +
@@ -45,14 +45,14 @@ Copiar TODO el repo base a `<destino>` EXCLUYENDO artefactos de build/runtime:
 En TODO el árbol destino (respetando mayúsculas/minúsculas), reemplazar según
 `BOOTSTRAP-TOKENS.md`:
 - `Plataforma` → **Nombre visible**
-- `plataforma` → **slug** (workspaces `factura-eletronica-web`/`factura-eletronica-landing` →
+- `plataforma` → **slug** (workspaces `factura-electronica-web`/`factura-electronica-landing` →
   `<slug>-web`/`<slug>-landing`, scripts `--workspace=`, `name` de cada `package.json`)
-- `factura-eletronica.app` → **dominio raíz** (el reemplazo de `plataforma` ya cubre el
-  prefijo; verificar que `factura-eletronica.app` quede como `<dominio>`)
+- `factura-electronica.app` → **dominio raíz** (el reemplazo de `plataforma` ya cubre el
+  prefijo; verificar que `factura-electronica.app` quede como `<dominio>`)
 
 Excluir de la búsqueda/reemplazo: `node_modules/`, `package-lock.json`,
 `.claude/hooks/lib/shared.test.mjs` (contiene "plataforma" como dato de test),
-y cualquier binario. Renombrar la carpeta `design-system/factura-eletronica/` →
+y cualquier binario. Renombrar la carpeta `design-system/factura-electronica/` →
 `design-system/<slug>/`.
 
 Verificación: `grep -rli "plataforma" --include="*.ts" --include="*.tsx"

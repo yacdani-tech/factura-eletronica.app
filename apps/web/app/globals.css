@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /*
- * Tokens de diseño — Factura Electrónica (placeholder).
- * Reemplazá la paleta por la de tu marca al instanciar una app nueva.
+ * Tokens de diseño — Factura Electrónica.
+ * Marca real (kit v1.0, 27-ago-2026): ver design-system/factura-electronica/MASTER.md.
  * UI light-first. Los valores shadcn (--primary, etc.) se expresan en HSL.
  */
 @layer base {
@@ -18,8 +18,13 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 141 65% 44%; /* color primario placeholder */
+    --primary: 141 65% 44%; /* #27B85A Verde de marca */
     --primary-foreground: 0 0% 100%;
+    --primary-dark: 141 61% 35%; /* #23924A hover/detalle */
+
+    /* Único verde permitido para TEXTO/enlaces sobre blanco (cumple AA;
+       el --primary claro no cumple para texto, ver MASTER.md). */
+    --verde-texto: 144 67% 29%; /* #187A3F */
 
     --secondary: 210 20% 98%;
     --secondary-foreground: 222 47% 11%;
@@ -40,7 +45,7 @@
     --radius: 0.5rem;
 
     /* Colores funcionales adicionales */
-    --exito: 141 65% 44%;
+    --exito: 141 61% 35%; /* #23924A — mismo verde oscuro de marca, ver MASTER.md */
     --alerta: 38 92% 50%; /* #F59E0B */
     --info: 217 91% 60%; /* #3B82F6 */
   }

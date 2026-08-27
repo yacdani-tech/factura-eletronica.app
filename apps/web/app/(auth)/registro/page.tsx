@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@fact
 import { textosAuth } from "@/lib/textos/auth";
 
 export const metadata: Metadata = {
-  title: "Acceso por invitación — factura-eletronica.app",
+  title: "Acceso por invitación — factura-electronica.app",
 };
 
 /**

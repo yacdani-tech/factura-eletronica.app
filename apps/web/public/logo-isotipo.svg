@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32"><rect width="32" height="32" rx="7" fill="#0f766e"/><path d="M9 11h14M9 16h14M9 21h9" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-labelledby="title desc">
+<title id="title">factura-electronica.app</title>
+<desc id="desc">Isotipo F geométrica, versión verde. Reconstrucción vectorial de la opción 1 aprobada. Letras convertidas a trazados; fondo transparente.</desc>
+<g transform="translate(26 50)"><g fill="none" stroke="#27B85A" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M238 51 V49 Q238 46 234 44 L178 12 Q171 8 164 12 L103 47 Q95 51 95 58 V143 Q95 151 102 155 L164 190 Q171 194 178 190 L238 152"/>
+  <path d="M28 81 H56 M9 116 H56" stroke-width="19"/>
+</g>
+<path fill="#27B85A" d="M146 55 H201 Q207 55 207 61 V69 Q207 75 201 75 H163 V93 H195 Q201 93 201 99 V107 Q201 113 195 113 H163 V141 Q163 147 157 147 H146 Q140 147 140 141 V61 Q140 55 146 55 Z"/></g>
+</svg>

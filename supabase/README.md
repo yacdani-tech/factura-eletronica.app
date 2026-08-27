@@ -1,6 +1,6 @@
-# supabase/ — factura-eletronica
+# supabase/ — factura-electronica
 
-Esquema de base de datos del framework multi-tenant `factura-eletronica`
+Esquema de base de datos del framework multi-tenant `factura-electronica`
 (Postgres + RLS sobre Supabase). Este set de migraciones crea ÚNICAMENTE el
 esqueleto de plataforma — tenants, usuarios, membresías, invitaciones,
 super-admins, catálogo de monedas y de planes, auditoría, funciones helper de
@@ -10,7 +10,7 @@ config específicas, motor de cálculo, etc.) encima de esta base, en
 migraciones nuevas.
 
 Este set de migraciones se extrajo (2026-08-26) de un proyecto real
-(factura-eletronica.app), removiendo toda tabla/columna/enum específica de ESE
+(factura-electronica.app), removiendo toda tabla/columna/enum específica de ESE
 dominio (paquetes, documentos, consolidados, subclientes, rutas/zonas,
 catálogo de producto, palabras clave, modelos de entrega, facturación de
 suscripción a couriers, motor de cálculo de peso/moneda, etc.) y conservando

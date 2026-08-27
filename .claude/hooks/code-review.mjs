@@ -73,7 +73,7 @@ async function main() {
   if (!process.env.OPENAI_API_KEY) return;
 
   const prompt = `
-Actúa como senior code reviewer estilo Codex para factura-eletronica.app.
+Actúa como senior code reviewer estilo Codex para factura-electronica.app.
 
 NO eres el QA de negocio. Tu foco es calidad de código.
 

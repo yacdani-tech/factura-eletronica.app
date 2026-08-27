@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/auth/login-form";
 import { textosAuth } from "@/lib/textos/auth";
 
 export const metadata: Metadata = {
-  title: "Ingresar — factura-eletronica.app",
+  title: "Ingresar — factura-electronica.app",
 };
 
 interface LoginPageProps {

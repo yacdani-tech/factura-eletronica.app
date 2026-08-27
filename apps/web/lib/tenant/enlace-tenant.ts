@@ -12,7 +12,7 @@ import { obtenerDominioRaiz } from "@factura/core/tenant/subdominio";
  * literal), útil para redirects de auth donde el visitante YA está en el
  * host correcto. Acá el caso es distinto — un Super-Admin en "modo soporte"
  * (SA-2) puede estar viendo el dashboard de un tenant desde el dominio de
- * PLATAFORMA (`web.factura-eletronica.app`), no desde el subdominio real del
+ * PLATAFORMA (`web.factura-electronica.app`), no desde el subdominio real del
  * courier — el link que se comparte con clientes finales SIEMPRE debe
  * apuntar al subdominio REAL del tenant, sin importar desde dónde lo esté
  * viendo el operador. Por eso esta función arma el host desde el
@@ -20,12 +20,12 @@ import { obtenerDominioRaiz } from "@factura/core/tenant/subdominio";
  * para decidir protocolo (local -> `http`) y preservar el puerto de dev.
  *
  * Mismo criterio "host local = http" que `origenSitio()`, y mismo `null`
- * defensivo de `obtenerDominioRaiz()` (fallback a `factura-eletronica.app`).
+ * defensivo de `obtenerDominioRaiz()` (fallback a `factura-electronica.app`).
  *
  * Limitación conocida (igual que `resolverSubdominio`, `lib/tenant/subdominio.ts`):
  * en un preview de Vercel (`*.vercel.app`) no hay forma real de construir un
  * subdominio de tenant — se arma igual con el dominio raíz configurado
- * (`factura-eletronica.app` por defecto), que no resolverá en ese entorno. No es un
+ * (`factura-electronica.app` por defecto), que no resolverá en ese entorno. No es un
  * caso real de producción.
  */
 export async function construirUrlPublicaTenant(subdominio: string, ruta: string): Promise<string> {

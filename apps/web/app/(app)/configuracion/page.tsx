@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@factura/ui/card";
 
 export const metadata: Metadata = {
-  title: "Configuración — factura-eletronica.app",
+  title: "Configuración — factura-electronica.app",
 };
 
 export default function ConfiguracionPage() {

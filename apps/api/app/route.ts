@@ -4,5 +4,5 @@
  * layout (no hay UI).
  */
 export function GET(): Response {
-  return Response.json({ service: "factura-eletronica-api", ok: true });
+  return Response.json({ service: "factura-electronica-api", ok: true });
 }

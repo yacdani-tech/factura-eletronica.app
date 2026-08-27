@@ -13,7 +13,7 @@
 // baseline de dominio.
 //
 // Uso:
-//   npm run test:e2e:seed --workspace=factura-eletronica-web
+//   npm run test:e2e:seed --workspace=factura-electronica-web
 // (o `node e2e/seed-tenant-e2e.mjs` desde apps/web)
 //
 // Variables de entorno requeridas:

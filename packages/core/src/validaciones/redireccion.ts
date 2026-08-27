@@ -17,7 +17,7 @@
  * `"/\t/evil.com"` NO empiezan literalmente con `"//"` ni contienen
  * `"://"`, pero el navegador los normaliza a un `//evil.com` protocol-relative
  * y termina navegando a un origen externo. Confirmado con
- * `new URL(valor, "https://factura-eletronica.app").href` en Node (mismo parser).
+ * `new URL(valor, "https://factura-electronica.app").href` en Node (mismo parser).
  *
  * POLÍTICA (conservadora a propósito, ronda de QA 2026-07-14): en vez de
  * normalizar-y-validar, cualquier valor que CONTENGA backslash o tab/CR/LF se

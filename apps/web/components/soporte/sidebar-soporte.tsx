@@ -41,7 +41,7 @@ export function SidebarSoporte() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-isotipo.svg" alt="" aria-hidden="true" className="h-8 w-8 shrink-0" />
           <span className="hidden text-base font-bold leading-none text-foreground sm:inline">
-            plataforma<span className="text-[hsl(var(--verde-texto))]">.app</span>
+            factura-electronica<span className="text-[hsl(var(--verde-texto))]">.app</span>
           </span>
           <span className="hidden text-[0.6875rem] font-semibold uppercase tracking-wider text-muted-foreground sm:inline">
             {t.sobreEtiqueta}

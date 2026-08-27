@@ -7,7 +7,7 @@ import { SITE_URL } from "@/lib/site";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const TITLE = "Factura Electrónica";

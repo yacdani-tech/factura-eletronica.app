@@ -16,7 +16,7 @@ import { AccionesTenant } from "@/components/soporte/acciones-tenant";
 import { textosSoporte } from "@/lib/textos/soporte";
 
 export const metadata: Metadata = {
-  title: "Factura Electrónica — factura-eletronica.app",
+  title: "Factura Electrónica — factura-electronica.app",
   robots: { index: false, follow: false },
 };
 

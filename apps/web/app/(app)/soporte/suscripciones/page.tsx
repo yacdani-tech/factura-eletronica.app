@@ -16,7 +16,7 @@ import { AccionesSuscripcion } from "@/components/soporte/acciones-suscripcion";
 import type { EstadoSuscripcionFactura } from "@factura/core/suscripcion/tipos";
 
 export const metadata: Metadata = {
-  title: "Suscripciones — factura-eletronica.app",
+  title: "Suscripciones — factura-electronica.app",
   robots: { index: false, follow: false },
 };
 

@@ -1,6 +1,6 @@
 ---
 name: bucle-agentico
-description: "Ejecutar features complejas de factura-eletronica.app por fases, con mapeo de contexto real antes de generar las subtareas de cada fase. Activar cuando la tarea toca BD + lógica + UI coordinadas, varios archivos con dependencias entre sí, o una tarea grande del plan. NO usar para fixes puntuales o componentes sueltos."
+description: "Ejecutar features complejas de factura-electronica.app por fases, con mapeo de contexto real antes de generar las subtareas de cada fase. Activar cuando la tarea toca BD + lógica + UI coordinadas, varios archivos con dependencias entre sí, o una tarea grande del plan. NO usar para fixes puntuales o componentes sueltos."
 allowed-tools: Read, Grep, Glob, Write, Edit, Bash, TodoWrite
 ---
 
