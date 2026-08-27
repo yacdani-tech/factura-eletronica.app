@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
 import { Sidebar } from "@/components/layout/sidebar";
@@ -10,7 +10,6 @@ import { decidirVistaAppShell } from "@/lib/auth/decidir-vista-app-shell";
 import { obtenerBrandingTenant } from "@factura/db/tenant/branding";
 import { PATHNAME_HEADER } from "@/lib/servidor/pathname-header";
 import { esRutaConsolaSoporte, RUTA_CONSOLA_SOPORTE } from "@/lib/soporte/rutas";
-import { subdominioActualNoExiste } from "@factura/db/tenant/gate-subdominio";
 
 /**
  * Layout del app shell. Una sola interfaz para todos los roles
@@ -43,16 +42,11 @@ import { subdominioActualNoExiste } from "@factura/db/tenant/gate-subdominio";
  *   4. Usuario normal sin membresía -> `<SinEquipo/>` (igual que antes).
  */
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  // Gate "subdominio inexistente -> 404" en PARALELO con la resolución de
-  // sesión (no suma latencia perceptible: ambas son queries indexadas). Se
-  // aplica también a usuarios YA logueados (decisión de Yac) — cubre el caso
-  // de una sesión vieja en un host que dejó de existir. Ver
-  // `lib/tenant/gate-subdominio.ts` para el detalle de qué casos SÍ y NO
-  // disparan el 404 (ej. `bloqueado` NO dispara: preserva la expulsión de
-  // courier bloqueado más abajo).
-  const [contexto, subdominioNoExiste] = await Promise.all([obtenerUsuarioActual(), subdominioActualNoExiste()]);
-
-  if (subdominioNoExiste) notFound();
+  // Modelo de tenant POR SESIÓN (este producto NO usa subdominio por tenant):
+  // el dashboard se sirve en un host fijo (`web.`) y el tenant se resuelve del
+  // login/membresía. No hay gate de "subdominio inexistente -> 404" (el
+  // framework casilleros sí lo tenía, porque ahí cada tenant tenía su subdominio).
+  const contexto = await obtenerUsuarioActual();
 
   if (!contexto) {
     redirect("/login");
